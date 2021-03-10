@@ -3,12 +3,15 @@ package controller.view;
 import controller.StudyFiles;
 import java.io.File;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -62,37 +65,56 @@ public class StudyDisplay extends Application {
         textField.setLayoutY(1);
         textField.setMinWidth(450);
         textField.setMinHeight(25);
+        textField.setText("hello world!");
+//        textField.setOnKeyPressed(new EventHandler<KeyEvent>(){
+//            @Override
+//            public void handle(KeyEvent e) {
+//                textField.setText("oops");
+//            }
+//        });
         return textField;
     }
 
     private Button button() {
-        Button button = new Button("Print Hello World");
+        Button button = new Button("Print random definition");
         button.setPrefSize(200, 200);
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Hello World");
-            }
-        });
+//        button.setOnAction((ActionEvent event) -> {
+//            this.setText(textField(), "hi");
+//            System.out.println("ran");
+//        });
         return button;
     }
+//
+//    private Button button2() {
+//        Button button = new Button("Print Bye World");
+//        button.setOnAction((ActionEvent event) -> {
+//            System.out.println("Bye World");
+//            StudyDisplay.showSaveDialog();
+//        });
+//        return button;
+//    }
 
-    private Button button2() {
-        Button button = new Button("Print Bye World");
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("Bye World");
-                StudyDisplay.showSaveDialog();
-            }
-        });
-        return button;
+    Button button1 = button();
+    Button button2 = button();
+    TextField textField1 = textField();
+
+    private void setAction() {
+        button2.setText("bye");
+        button2.setOnAction(
+                (ActionEvent event) -> {
+                    System.out.println("Bye World");
+                    textField1.setText("uuuuuu");
+                    StudyDisplay.showSaveDialog();
+                }
+        );
     }
 
     private void addControls() {
 //        gridPane.getRowConstraints().add(new RowConstraints(100));
-        gridPane.add(button(), 0, 0);
-        gridPane.add(button2(), 0, 1);
+        setAction();
+        gridPane.add(button1, 0, 0);
+        gridPane.add(button2, 0, 1);
+        gridPane.add(textField1, 1, 1);
     }
 
     private void startForm() {
@@ -105,10 +127,16 @@ public class StudyDisplay extends Application {
         stage.show();
     }
 
+    @Override
     public void start(Stage primaryStage) throws Exception {
         startForm();
     }
 
+//    public void setText(TextField txtFld, String newText) {
+//        Platform.runLater(() -> {
+//            txtFld.setText(newText);
+//        });
+//    }
     public static void showSaveDialog() {
         FileChooser fc = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
