@@ -1,0 +1,3 @@
+hotdog; food;
+watermelon; fruit;
+sat; sad;

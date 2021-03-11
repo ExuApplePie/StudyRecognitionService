@@ -1,5 +1,7 @@
+package controller.view;
 
-import controller.view.StudyDisplay;
+
+import controller.models.StudyDisplay;
 import javafx.application.Application;
 
 /*

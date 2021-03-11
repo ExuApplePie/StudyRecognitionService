@@ -1,17 +1,13 @@
-package controller.view;
+package controller.models;
 
+import controller.BackendModelSetup;
 import controller.StudyFiles;
 import java.io.File;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -26,9 +22,8 @@ import javafx.stage.Stage;
  * @author 84038001
  */
 public class StudyDisplay extends Application {
-
-    public StudyDisplay() {
-    }
+    
+    BackendModelSetup theBackendModel;
 
     public void updateDisplay() {
     }
@@ -98,20 +93,9 @@ public class StudyDisplay extends Application {
     Button button2 = button();
     TextField textField1 = textField();
 
-    private void setAction() {
-        button2.setText("bye");
-        button2.setOnAction(
-                (ActionEvent event) -> {
-                    System.out.println("Bye World");
-                    textField1.setText("uuuuuu");
-                    StudyDisplay.showSaveDialog();
-                }
-        );
-    }
-
     private void addControls() {
 //        gridPane.getRowConstraints().add(new RowConstraints(100));
-        setAction();
+//        setAction();
         gridPane.add(button1, 0, 0);
         gridPane.add(button2, 0, 1);
         gridPane.add(textField1, 1, 1);

@@ -6,11 +6,13 @@ package controller;
  */
 import java.util.logging.Logger;
 import java.util.logging.Level;
-import controller.view.StudyDisplay;
+import controller.models.StudyDisplay;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Scanner;
 /**
  *
  * @author 84038001
@@ -41,7 +43,18 @@ public class StudyFiles {
     }
     
     public static String readFile(String path) {
-        return null;
+        File fl = new File(path);
+        String str = "";
+        try {
+            Scanner sc = new Scanner(fl);
+            while (sc.hasNext()) {
+                str += sc.nextLine();
+            }
+            sc.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(StudyFiles.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return str;
     }
     
     public static String saveUserData() {
