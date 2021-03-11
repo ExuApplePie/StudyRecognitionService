@@ -6,7 +6,7 @@ package controller;
  */
 import java.util.logging.Logger;
 import java.util.logging.Level;
-import controller.models.StudyDisplay;
+import application.StudyDisplay;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;

@@ -1,4 +1,4 @@
-package controller.models;
+package models;
 
 import controller.StudyFiles;
 import java.util.ArrayList;

@@ -5,7 +5,6 @@
  */
 package controller;
 
-import controller.models.BackendModels;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 
@@ -15,10 +14,9 @@ import javafx.scene.control.Button;
  */
 public class StudyDisplayController {
 
-    public StudyDisplayController(BackendModels bm) {
-        this.bm = bm;
+    public StudyDisplayController() {
     }
-    BackendModels bm;
+
 
     public void setPressAction(Button button, String str) {
         button.setOnAction(

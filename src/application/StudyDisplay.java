@@ -1,6 +1,5 @@
-package controller.models;
+package application;
 
-import controller.BackendModelSetup;
 import controller.StudyFiles;
 import java.io.File;
 import javafx.application.Application;
@@ -23,7 +22,6 @@ import javafx.stage.Stage;
  */
 public class StudyDisplay extends Application {
     
-    BackendModelSetup theBackendModel;
 
     public void updateDisplay() {
     }

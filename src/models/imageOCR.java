@@ -1,18 +1,20 @@
+package models;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.models;
-
 /**
  *
  * @author 84038001
  */
-public class BackendModels {
-
-    public BackendModels() {
-        this.service = new SRS("New Text Document.txt");
+public class imageOCR {
+    public imageOCR (String path) {
+        //create a new OCR object on the path to file
     }
-    public SRS service;
+    
+    public static String scanImage() {
+        return null;
+    }
 }
