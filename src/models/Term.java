@@ -56,6 +56,12 @@ public class Term {
     public final void setScore(int i) {
         this.score = i;
     }
+    
+    
+    @Override
+    public String toString() {
+        return getDefinition() + " " + getValue() + " " + getScore();
+    }
         
     
 }
