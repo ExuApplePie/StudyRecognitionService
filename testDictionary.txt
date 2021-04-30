@@ -1,0 +1,5 @@
+apple;fruit;
+orange juice;drink;
+phone;electronic;
+chips;junk food;
+car;automobile;
