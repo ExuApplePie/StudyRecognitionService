@@ -66,11 +66,15 @@ public class StudyDisplayController {
 
     }
 
-    public void checkAnswerOnPress(TextInputControl questionField, TextInputControl ansField, SRS srs) {
+    public void checkAnswerOnPress(TextInputControl questionField, TextInputControl ansField, TextInputControl scoreField, SRS srs) {
         ansField.setOnKeyPressed((KeyEvent event) -> {
             if (event.getCode() == KeyCode.ENTER) {
                 boolean b = srs.checkAns(ansField.getText(), questionField.getText()); //replace the two parameters with getting them from the text areas
-                System.out.println(b);
+                if (b) {
+                    scoreField.setText("correct - Score: " + srs.getScore(questionField.getText()));
+                } else {
+                    scoreField.setText("incorrect - Score: " + srs.getScore(questionField.getText()));
+                }
             }
         });
     }

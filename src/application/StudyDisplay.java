@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -82,18 +83,7 @@ public class StudyDisplay extends Application {
         button.setPrefSize(200, 200);
         return button;
     }
-/*
-    private Image image(String path) {
-        InputStream stream;
-        try {
-            stream = new FileInputStream(path);
-            Image image = new Image(stream);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(StudyDisplay.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
-    }
-*/
 //
 //    private Button button2() {
 //        Button button = new Button("Print Bye World");
@@ -103,11 +93,11 @@ public class StudyDisplay extends Application {
 //        });
 //        return button;
 //    }
-
     Button button1 = button("Random Definition");
     Button button2 = button("Random Term");
     TextField questionField = textField();
     TextField ansField = textField();
+    TextField scoreField = textField();
 
     private void addControls() {
 //        gridPane.getRowConstraints().add(new RowConstraints(100));
@@ -115,10 +105,11 @@ public class StudyDisplay extends Application {
         gridPane.add(button1, 0, 0);
         controller.showDefinition(button1, questionField, studySet);
         controller.showTerm(button2, questionField, studySet);
-        controller.checkAnswerOnPress(questionField, ansField, studySet);
+        controller.checkAnswerOnPress(questionField, ansField, scoreField, studySet);
         gridPane.add(button2, 0, 1);
         gridPane.add(questionField, 1, 1);
         gridPane.add(ansField, 1, 2);
+        gridPane.add(scoreField, 1, 3);
     }
 
     private void startForm() {

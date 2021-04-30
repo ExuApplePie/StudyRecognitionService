@@ -14,9 +14,9 @@ import javafx.beans.property.StringProperty;
  */
 public class Term {
     public Term (String definition, String value, int score) {
-        setDefinition(definition);
-        setValue(value);
-        setScore(0);
+        this.setDefinition(definition);
+        this.setValue(value);
+        this.setScore(0);
     }
     
     private final StringProperty definition = new SimpleStringProperty();
