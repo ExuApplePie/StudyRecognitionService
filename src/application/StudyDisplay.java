@@ -1,15 +1,23 @@
 package application;
 
+import controller.StudyDisplayController;
 import controller.StudyFiles;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import models.SRS;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,12 +29,13 @@ import javafx.stage.Stage;
  * @author 84038001
  */
 public class StudyDisplay extends Application {
-    
 
     public void updateDisplay() {
     }
 
     private GridPane gridPane;
+    private StudyDisplayController controller = new StudyDisplayController();
+    private SRS studySet = new SRS("testDictionary.txt");
 
 //    private void keyEvent (KeyEvent evt) {
 //        if (evt.getCode() == KeyCode.ENTER) {
@@ -68,15 +77,23 @@ public class StudyDisplay extends Application {
         return textField;
     }
 
-    private Button button() {
-        Button button = new Button("Print random definition");
+    private Button button(String title) {
+        Button button = new Button(title);
         button.setPrefSize(200, 200);
-//        button.setOnAction((ActionEvent event) -> {
-//            this.setText(textField(), "hi");
-//            System.out.println("ran");
-//        });
         return button;
     }
+/*
+    private Image image(String path) {
+        InputStream stream;
+        try {
+            stream = new FileInputStream(path);
+            Image image = new Image(stream);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(StudyDisplay.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+*/
 //
 //    private Button button2() {
 //        Button button = new Button("Print Bye World");
@@ -87,16 +104,21 @@ public class StudyDisplay extends Application {
 //        return button;
 //    }
 
-    Button button1 = button();
-    Button button2 = button();
-    TextField textField1 = textField();
+    Button button1 = button("Random Definition");
+    Button button2 = button("Random Term");
+    TextField questionField = textField();
+    TextField ansField = textField();
 
     private void addControls() {
 //        gridPane.getRowConstraints().add(new RowConstraints(100));
 //        setAction();
         gridPane.add(button1, 0, 0);
+        controller.showDefinition(button1, questionField, studySet);
+        controller.showTerm(button2, questionField, studySet);
+        controller.checkAnswerOnPress(questionField, ansField, studySet);
         gridPane.add(button2, 0, 1);
-        gridPane.add(textField1, 1, 1);
+        gridPane.add(questionField, 1, 1);
+        gridPane.add(ansField, 1, 2);
     }
 
     private void startForm() {

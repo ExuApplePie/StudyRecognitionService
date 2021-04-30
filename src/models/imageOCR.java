@@ -9,12 +9,24 @@ package models;
  *
  * @author 84038001
  */
-public class imageOCR {
-    public imageOCR (String path) {
-        //create a new OCR object on the path to file
+import java.io.File;
+import net.sourceforge.tess4j.*;
+
+public final class imageOCR {
+
+    private imageOCR() {
     }
-    
-    public static String scanImage() {
+
+    public static String scanImage(String path) {
+        File imageFile = new File(path);
+        ITesseract instance = new Tesseract();
+
+        try {
+            return instance.doOCR(imageFile);
+        } catch (TesseractException e) {
+            System.err.println(e.getMessage());
+        }
         return null;
     }
+
 }
