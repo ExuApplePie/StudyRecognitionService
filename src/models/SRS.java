@@ -81,14 +81,14 @@ public class SRS {
 
     public boolean checkAns(String ans, String question) {
         for (int i = 0; i < this.dictionary.size(); i++) {
-            System.out.println(this.dictionary.get(i)[0]);
-            System.out.println(this.dictionary.get(i)[1]);
-            System.out.println("");
+//            System.out.println(this.dictionary.get(i)[0]);
+//            System.out.println(this.dictionary.get(i)[1]);
+//            System.out.println("");
         }
 //        System.out.println("ans: " + ans + "\nquestion: " + question + "\nmode: " + this.getDefaultMode() + "\n");
         if (this.getDefaultMode()) { //when checking for the definition
             int indx = this.termMap.get(question);
-            System.out.println(dictionary.get(indx)[1]);
+//            System.out.println(dictionary.get(indx)[1]);
             if (dictionary.get(indx)[1].equals(ans)) {
                 return true;
             } else {
@@ -96,7 +96,7 @@ public class SRS {
             }
         } else {
             int indx = this.definitionMap.get(question);
-            System.out.println(dictionary.get(indx)[0]);
+//            System.out.println(dictionary.get(indx)[0]);
             if (dictionary.get(indx)[0].equals(ans)) {
                 return true;
             } else {
