@@ -62,13 +62,13 @@ public class StudyDisplay extends Application {
         return textArea;
     }
 
-    private TextField textField() {
+    private TextField textField(String text) {
         TextField textField = new TextField();
         textField.setLayoutX(0);
         textField.setLayoutY(1);
         textField.setMinWidth(450);
         textField.setMinHeight(25);
-        textField.setText("hello world!");
+        textField.setText(text);
 //        textField.setOnKeyPressed(new EventHandler<KeyEvent>(){
 //            @Override
 //            public void handle(KeyEvent e) {
@@ -93,11 +93,11 @@ public class StudyDisplay extends Application {
 //        });
 //        return button;
 //    }
-    Button button1 = button("Random Definition");
-    Button button2 = button("Random Term");
-    TextField questionField = textField();
-    TextField ansField = textField();
-    TextField scoreField = textField();
+    Button button1 = button("Random Definition"); //corresponds to values
+    Button button2 = button("Random Term"); //corresponds to definitions
+    TextField questionField = textField("Questions Appear Here");
+    TextField ansField = textField("Type your answers here");
+    TextField scoreField = textField("Your score for the term shows up here");
 
     private void addControls() {
 //        gridPane.getRowConstraints().add(new RowConstraints(100));

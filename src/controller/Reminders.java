@@ -3,21 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package controller;
 
 /**
  *
- * @author 84038001
+ * @author niclo
  */
 public class Reminders {
-    public Reminders(){
-        
+
+    public Reminders() {
+
     }
-    
+
     public void displayNotification() {
-        
+
     }
-    
+
     public void setReminder(String content, int date) {
-        
+
     }
 }

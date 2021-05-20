@@ -49,16 +49,29 @@ public class Data {
         return termList;
     }
 
+   public void initializeData(File file) {
+     try {
+            Scanner sc = new Scanner(file);
+            sc.useDelimiter(";");
+            while (sc.hasNext()) {
+                termList.add(new Term(sc.next(), sc.next(), 0));
+            }
+            sc.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   }
+    
     public void loadData(File file) {
         try {
             Scanner sc = new Scanner(file);
             while (sc.hasNext()) {
-                termList.set(0, new Term(sc.next(), sc.next(), Integer.parseInt(sc.next())));
+                termList.add(new Term(sc.next(), sc.next(), Integer.parseInt(sc.next())));
             }
+            sc.close();
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     public void saveData(File file) {
