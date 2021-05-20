@@ -47,23 +47,12 @@ public class SRS {
     //get the question, use termMap or definitionMap to find the index in arrayList
     public int getScore(String question) {
         if (this.getDefaultMode()) { //asking for value - so check definition
-//            for (Term currTerm : this.data.getTermList()) {
-//                if (currTerm.getValue().equals(question)) {
-//                    return currTerm.getScore();
-//                }
-//            }
             try {
                 return this.findElement(this.data.getTermList(), question).getScore();
             } catch (IllegalArgumentException e) {
                 throw new IllegalArgumentException("the definition does not exist");
             }
-
         } else {
-//            for (Term currTerm : this.data.getTermList()) {
-//                if (currTerm.getDefinition().equals(question)) {
-//                    return currTerm.getScore();
-//                }
-//            }
             try {
                 return this.findElement(this.data.getTermList(), question).getScore();
             } catch (IllegalArgumentException e) {
@@ -98,23 +87,11 @@ public class SRS {
         Term currTerm = this.findElement(this.data.getTermList(), question);
         boolean returnVal;
         if (this.getDefaultMode()) { //when checking for the value
-//            for (Term currTerm : this.data.getTermList()) {
-//                if (currTerm.getValue().equals(question)) { //check the question to find the correct element in the list
-//                    this.setScore(ans.equalsIgnoreCase(currTerm.getDefinition()), currTerm);
-//                    return ans.equalsIgnoreCase(currTerm.getDefinition());
-//                }
-//            }
-            returnVal = currTerm.getValue().equalsIgnoreCase(ans);
+            returnVal = currTerm.getDefinition().trim().equalsIgnoreCase(ans.trim());
             this.setScore(returnVal, currTerm);
             return returnVal;
         } else {
-//            for (Term currTerm : this.data.getTermList()) {
-//                if (currTerm.getDefinition().equals(question)) {
-//                    this.setScore(ans.equalsIgnoreCase(currTerm.getValue()), currTerm);
-//                    return ans.equalsIgnoreCase(currTerm.getValue());
-//                }
-//            }
-            returnVal = currTerm.getDefinition().equalsIgnoreCase(ans);
+            returnVal = currTerm.getValue().trim().equalsIgnoreCase(ans.trim());
             this.setScore(returnVal, currTerm);
             return returnVal;
         }

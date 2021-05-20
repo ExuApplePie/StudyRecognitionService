@@ -103,8 +103,8 @@ public class StudyDisplay extends Application {
 //        gridPane.getRowConstraints().add(new RowConstraints(100));
 //        setAction();
         gridPane.add(button1, 0, 0);
-        controller.showDefinition(button1, questionField, studySet);
-        controller.showTerm(button2, questionField, studySet);
+        controller.showValue(button1, questionField, studySet);
+        controller.showDefinition(button2, questionField, studySet);
         controller.checkAnswerOnPress(questionField, ansField, scoreField, studySet);
         gridPane.add(button2, 0, 1);
         gridPane.add(questionField, 1, 1);

@@ -51,14 +51,14 @@ public class StudyDisplayController {
         );
     }
 
-    public void showTerm(Button button, TextInputControl textControl, SRS srs) {
+    public void showDefinition(Button button, TextInputControl textControl, SRS srs) {
         button.setOnAction(
                 (ActionEvent event) -> {
                     textControl.setText(srs.displayDefinition());
                 });
     }
 
-    public void showDefinition(Button button, TextInputControl textControl, SRS srs) {
+    public void showValue(Button button, TextInputControl textControl, SRS srs) {
         button.setOnAction(
                 (ActionEvent event) -> {
                     textControl.setText(srs.displayValue());
