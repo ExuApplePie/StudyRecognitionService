@@ -16,7 +16,7 @@ public class Term {
     public Term (String definition, String value, int score) {
         this.setDefinition(definition);
         this.setValue(value);
-        this.setScore(0);
+        this.setScore(score);
     }
     
     private final StringProperty definition = new SimpleStringProperty();
@@ -56,7 +56,6 @@ public class Term {
     public final void setScore(int i) {
         this.score = i;
     }
-    
     
     @Override
     public String toString() {

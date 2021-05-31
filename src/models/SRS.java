@@ -22,11 +22,18 @@ import javafx.collections.ObservableList;
  */
 public class SRS {
 
-    public SRS(String path) {
-        this.setDictionary(path);
+    public SRS() {
     }
 
-    Data data = new Data();
+    public void initData(TermData data) {
+        if (this.data != null) {
+            throw new IllegalStateException("Data can only be initialized once");
+        }
+
+        this.data = data;
+    }
+
+    private TermData data;
 //    ArrayList<Term> dictionary = new ArrayList<>();
 //    Map<String, Integer> termMap = new HashMap<>();
 //    Map<String, Integer> definitionMap = new HashMap<>();// better way to tdo this than 2 maps?
@@ -34,14 +41,17 @@ public class SRS {
 
     private boolean defaultMode; //mode switches beteween Definitions or values, default is asking for value (true) and non-default is definition (false)
 
+//I don't believe these are needed anymore as they will always be imported atm
+    //also make all the "TermData" objects one shared between all of them
+    /*
     private final void setDictionary(String path) {
         this.data.initializeData(new File(path));
     }
 
     public final void updateDictionary(String path) {
-        //same as setDictionary but just check if the term already exists
+        this.data.loadData(new File(path));
     }
-
+     */
     //scoreMap is linked to the ArrayList  index in dictionary
     //Need to get the index and then it can return the score
     //get the question, use termMap or definitionMap to find the index in arrayList
@@ -97,7 +107,7 @@ public class SRS {
         }
     }
 
-    public Term findElement(ObservableList<Term> list, String question) {
+    private Term findElement(ObservableList<Term> list, String question) {
         for (Term currTerm : list) {
             if (currTerm.getDefinition().equalsIgnoreCase(question) || currTerm.getValue().equalsIgnoreCase(question)) {
                 return currTerm;

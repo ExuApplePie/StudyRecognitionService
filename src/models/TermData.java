@@ -23,9 +23,9 @@ import javafx.collections.ObservableList;
  *
  * @author 840380010
  */
-public class Data {
+public class TermData {
 
-    public Data() {
+    public TermData() {
     }
 
     private final ObservableList<Term> termList = FXCollections.observableArrayList(terms
@@ -49,29 +49,40 @@ public class Data {
         return termList;
     }
 
-   public void initializeData(File file) {
-     try {
+    public void initializeData(File file) {
+        try {
             Scanner sc = new Scanner(file);
             sc.useDelimiter(";");
+            this.removeData();
             while (sc.hasNext()) {
                 termList.add(new Term(sc.next(), sc.next(), 0));
             }
             sc.close();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TermData.class.getName()).log(Level.SEVERE, null, ex);
         }
-   }
-    
+    }
+
     public void loadData(File file) {
         try {
             Scanner sc = new Scanner(file);
+            sc.useDelimiter(";");
+            this.removeData();
+//            int i = 0;
             while (sc.hasNext()) {
+//                System.out.printf("Definition: %s\nValue: %s\nRaw Number: %d\n", sc.next(), sc.next(), Integer.parseInt(sc.next()));
                 termList.add(new Term(sc.next(), sc.next(), Integer.parseInt(sc.next())));
+//                System.out.println(termList.get(i).toString());
+//                i++;
             }
             sc.close();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TermData.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void removeData() {
+        termList.clear();
     }
 
     public void saveData(File file) {
@@ -80,10 +91,13 @@ public class Data {
             fw = new FileWriter(file);
             PrintWriter pw = new PrintWriter(fw);
             for (int i = 0; i < termList.size(); i++) {
-                pw.println(termList.get(i).toString());
+                pw.print(termList.get(i).getDefinition() + ";" + termList.get(i).getValue() + ";" + termList.get(i).getScore() + ";");
             }
+            pw.close();
+            fw.close();
         } catch (IOException ex) {
-            Logger.getLogger(Data.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TermData.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
 }
