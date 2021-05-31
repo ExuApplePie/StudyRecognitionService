@@ -7,6 +7,7 @@ package controller;
 
 import application.StudyDisplay;
 import java.io.File;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -24,27 +25,27 @@ import models.SRS;
  * @author 84038001
  */
 public class StudyDisplayController {
-    
+
     private TermData data;
-    
+
     public void initData(TermData data) {
         if (this.data != null) {
             throw new IllegalStateException("Data can only be initialized once");
         }
-        
+
         this.data = data;
     }
-    
+
     public void load() {
         FileChooser chooser = new FileChooser();
         File file = chooser.showOpenDialog(null);
     }
-    
+
     public void save() {
         FileChooser chooser = new FileChooser();
         File file = chooser.showSaveDialog(null);
     }
-    
+
     public void setPressAction(Button button, String str) {
         button.setOnAction(
                 (ActionEvent event) -> {
@@ -52,7 +53,7 @@ public class StudyDisplayController {
                 }
         );
     }
-    
+
     public void showDefinition(Button button, Label label, TextInputControl textControl, SRS srs) {
         button.setOnAction(
                 (ActionEvent event) -> {
@@ -60,16 +61,16 @@ public class StudyDisplayController {
                     textControl.requestFocus();
                 });
     }
-    
+
     public void showValue(Button button, Label label, TextInputControl textControl, SRS srs) {
         button.setOnAction(
                 (ActionEvent event) -> {
                     label.setText(srs.displayValue());
                     textControl.requestFocus();
                 });
-        
+
     }
-    
+
     public void checkAnswerOnPress(Label questionLabel, TextInputControl ansField, TextInputControl scoreField, SRS srs) {
         ansField.setOnKeyPressed((KeyEvent event) -> {
             if (event.getCode() == KeyCode.ENTER) {
@@ -88,7 +89,7 @@ public class StudyDisplayController {
             }
         });
     }
-    
+
     public void importData(Button button) {
         button.setOnAction(
                 (ActionEvent event) -> {
@@ -106,14 +107,30 @@ public class StudyDisplayController {
                 }
         );
     }
-    
+
     public void saveData(Button button) {
         button.setOnAction((ActionEvent event) -> {
             File file = StudyDisplayController.showSaveDialog();
             this.data.saveData(file);
         });
     }
-    
+
+    public void startTimer(Button button, TextInputControl timeParam) {
+        button.setOnAction((ActionEvent event) -> {
+            TimerRunner tr = new TimerRunner();
+            try {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        tr.startTimer(Double.parseDouble(timeParam.getText()), button.getScene().getWindow());
+                    }
+                });
+            } catch (NumberFormatException e) {
+                timeParam.setText("use a real decimal number please");
+            }
+        });
+    }
+
     public static File showSaveDialog() {
         FileChooser fc = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
@@ -121,7 +138,7 @@ public class StudyDisplayController {
         File file = fc.showSaveDialog(null);
         return file;
     }
-    
+
     public static File showOpenDialog() {
         FileChooser fc = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");

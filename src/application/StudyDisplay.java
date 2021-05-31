@@ -32,10 +32,10 @@ import models.TermData;
  * @author 84038001
  */
 public class StudyDisplay extends Application {
-    
+
     public void updateDisplay() {
     }
-    
+
     private GridPane gridPane;
     private TermData data = new TermData();
     private StudyDisplayController controller = new StudyDisplayController();
@@ -53,10 +53,10 @@ public class StudyDisplay extends Application {
         label.setMaxWidth(500);
         label.setMinHeight(400);
         label.setText(text);
-        
+
         return label;
     }
-    
+
     private TextArea textArea() {
         TextArea textArea = new TextArea();
         textArea.setLayoutX(0);
@@ -75,7 +75,7 @@ public class StudyDisplay extends Application {
 //        });
         return textArea;
     }
-    
+
     private TextField textField(String text) {
         TextField textField = new TextField();
         textField.setLayoutX(0);
@@ -91,7 +91,7 @@ public class StudyDisplay extends Application {
 //        });
         return textField;
     }
-    
+
     private Button button(String title) {
         Button button = new Button(title);
         button.setPrefSize(200, 200);
@@ -111,30 +111,37 @@ public class StudyDisplay extends Application {
     Button definitionButton = button("Random Term"); //corresponds to definitions
     Button importDataButton = button("Import word list");
     Button saveDataButton = button("Save word list");
+    Button startTimerButton = button("Start Timer");
     Label questionLabel = label("Questions Appear Here");
     TextField ansField = textField("Type your answers here");
     TextField scoreField = textField("Your score for the term shows up here");
-    
+    TextField timerField = textField("type how long the timer should be");
+
     private void addControls() {
 //        gridPane.getRowConstraints().add(new RowConstraints(100));
 //        setAction();
         gridPane.add(valueButton, 0, 0);
         controller.showValue(valueButton, questionLabel, ansField, studySet);
-        
+
         gridPane.add(definitionButton, 0, 1);
         controller.showDefinition(definitionButton, questionLabel, ansField, studySet);
-        
+
         gridPane.add(questionLabel, 1, 1);
         gridPane.add(ansField, 1, 2);
         gridPane.add(scoreField, 1, 3);
         controller.checkAnswerOnPress(questionLabel, ansField, scoreField, studySet);
-        
+
         gridPane.add(importDataButton, 3, 0);
         controller.importData(importDataButton);
-        
+
         gridPane.add(saveDataButton, 3, 1);
         controller.saveData(saveDataButton);
+
+        gridPane.add(startTimerButton, 4, 0);
+        gridPane.add(timerField, 4, 1);
+        controller.startTimer(startTimerButton, timerField);
     }
+
     
     private void startForm() {
         controller.initData(data);
@@ -147,7 +154,7 @@ public class StudyDisplay extends Application {
         addControls();
         stage.show();
     }
-    
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         startForm();
