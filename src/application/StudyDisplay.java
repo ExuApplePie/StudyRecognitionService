@@ -1,7 +1,7 @@
 package application;
 
 import controller.StudyDisplayController;
-import controller.StudyFiles;
+import models.StudyFiles;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -148,10 +148,12 @@ public class StudyDisplay extends Application {
     private void startForm() {
         controller.initData(data);
         studySet.initData(data);
+        StudyFiles.loadUserData(data);
         gridPane = new GridPane();
         Scene scene = new Scene(gridPane, 1600, 900);
         Stage stage = new Stage();
         stage.setOnCloseRequest((WindowEvent t) -> {
+            StudyFiles.saveUserData(data.formatData()); // move this out of here as it won't close unless there's data
             Platform.exit();
             System.exit(0);
         });

@@ -1,6 +1,5 @@
 package models;
 
-import controller.StudyFiles;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;

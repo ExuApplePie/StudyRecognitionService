@@ -1,4 +1,5 @@
-package controller;
+package models;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,35 +14,34 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
+
 /**
  *
  * @author 84038001
  */
 public class StudyFiles {
+
     public StudyFiles() {
-        
+
     }
-    
-    public static void saveFile(File file) {
-        if (file != null) {
-            try {
-                FileWriter fw = new FileWriter(file, true);
-                PrintWriter pw = new PrintWriter(fw);
-                pw.print("hi");
-                pw.close();
-                fw.close();
-                
-            } catch (IOException e) {
-                Logger.getLogger(StudyFiles.class.getName()).log(Level.SEVERE, null, e);
+
+    public static void saveFile(String path, String content) {
+        File file = new File(path);
+        try {
+            Scanner sc = new Scanner(content);
+            FileWriter fw = new FileWriter(file);
+            PrintWriter pw = new PrintWriter(fw);
+            while (sc.hasNext()) {
+                pw.print("\n"); //extra white line needs removing
+                pw.print(sc.nextLine());
             }
+            pw.close();
+            fw.close();
+        } catch (IOException e) {
+            Logger.getLogger(StudyFiles.class.getName()).log(Level.SEVERE, null, e);
         }
-        
     }
-    
-    public static void saveFile(String path) {
-        
-    }
-    
+
     public static String readFile(String path) {
         File fl = new File(path);
         String str = "";
@@ -56,14 +56,21 @@ public class StudyFiles {
         }
         return str;
     }
-    
-    public static String saveUserData() {
-        saveFile("path to user data");
-        return "successfully saved data";
+
+    public static void saveUserData(String content) {
+        StudyFiles.saveFile(System.getProperty("user.dir") + "/UserData.txt", content);
     }
-    
+
+    public static void loadUserData(TermData data) {
+        try {
+            data.loadData(new File(System.getProperty("user.dir") + "/UserData.txt"));
+        } catch (NumberFormatException e) {
+            System.out.println("no user data to import");
+        }
+    }
+
     public static void exportFile(String path) {
-        
+
     }
-    
+
 }

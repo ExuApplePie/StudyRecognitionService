@@ -81,16 +81,12 @@ public class TermData {
         }
     }
 
-    private void removeData() {
-        termList.clear();
-    }
-
     public void saveData(File file) {
         FileWriter fw;
         try {
             fw = new FileWriter(file);
             PrintWriter pw = new PrintWriter(fw);
-            for (int i = 0; i < termList.size(); i++) {
+            for (int i = 0; i < termList.size(); i++) { //use format data here 
                 pw.print(termList.get(i).getDefinition() + ";" + termList.get(i).getValue() + ";" + termList.get(i).getScore() + ";");
             }
             pw.close();
@@ -98,6 +94,18 @@ public class TermData {
         } catch (IOException ex) {
             Logger.getLogger(TermData.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public String formatData() {
+        String str = new String();
+        for (Term indx : this.getTermList()) {
+            str += indx.getDefinition() + ";" + indx.getValue() + ";" + indx.getScore() + ";\n";
+        }
+        return str;
+    }
+    
+    private void removeData() {
+        termList.clear();
     }
 
 }
