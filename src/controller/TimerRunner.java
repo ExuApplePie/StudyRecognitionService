@@ -18,37 +18,34 @@ import javafx.stage.Window;
  * @author 84038001
  */
 public class TimerRunner {
-
+    
     public TimerRunner() {
         this.timer = new Timer();
     }
     private Timer timer;
-
+    
     public void startTimer(double min, Window window) {
         this.timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("timer end");
-                Popup popup = new Popup(); //perhaps move this to the GUI controls and make it run a method from there
-                popup.getContent().add(new Label("Timer End!"));
-                popup.show(window);
+                StudyDisplayController.showTimerEndWindow(window);
                 this.cancel();
             }
         }, (long) (min * 60 * 1000)); //*60 for minutes
     }
-
+    
     public void playNoise(String url) {
         try {
-
+            
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
-
+    
     public void setNoise() {
-
+        
     }
-
+    
     public static double calculateTime(int startTime) {
         return 0.0;
     }

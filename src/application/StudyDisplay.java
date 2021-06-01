@@ -9,6 +9,8 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,6 +21,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import models.SRS;
 import models.TermData;
 
@@ -142,13 +145,16 @@ public class StudyDisplay extends Application {
         controller.startTimer(startTimerButton, timerField);
     }
 
-    
     private void startForm() {
         controller.initData(data);
         studySet.initData(data);
         gridPane = new GridPane();
         Scene scene = new Scene(gridPane, 1600, 900);
         Stage stage = new Stage();
+        stage.setOnCloseRequest((WindowEvent t) -> {
+            Platform.exit();
+            System.exit(0);
+        });
         stage.setTitle("Study Program");
         stage.setScene(scene);
         addControls();

@@ -10,13 +10,19 @@ import java.io.File;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import models.TermData;
 import models.SRS;
 
@@ -119,15 +125,30 @@ public class StudyDisplayController {
         button.setOnAction((ActionEvent event) -> {
             TimerRunner tr = new TimerRunner();
             try {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        tr.startTimer(Double.parseDouble(timeParam.getText()), button.getScene().getWindow());
-                    }
-                });
+                tr.startTimer(Double.parseDouble(timeParam.getText()), button.getScene().getWindow());
             } catch (NumberFormatException e) {
                 timeParam.setText("use a real decimal number please");
             }
+        });
+    }
+
+    public static void showTimerEndWindow(Window window) {
+        Platform.runLater(() -> {
+            Stage popupWindow = new Stage();
+            popupWindow.initModality(Modality.APPLICATION_MODAL);
+            popupWindow.setTitle("The timer has ended");
+            Label label1 = new Label("Timer End!");
+            Button button1 = new Button("close this window");
+            button1.setOnAction(e -> {
+                popupWindow.close();
+            });
+
+            VBox layout = new VBox(10);
+            layout.getChildren().addAll(label1, button1);
+            layout.setAlignment(Pos.CENTER);
+            Scene scene1 = new Scene(layout, 300, 250);
+            popupWindow.setScene(scene1);
+            popupWindow.showAndWait();
         });
     }
 
