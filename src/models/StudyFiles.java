@@ -31,9 +31,13 @@ public class StudyFiles {
             Scanner sc = new Scanner(content);
             FileWriter fw = new FileWriter(file);
             PrintWriter pw = new PrintWriter(fw);
+            boolean firstPass = true;
             while (sc.hasNext()) {
-                pw.print("\n"); //extra white line needs removing
-                pw.print(sc.nextLine());
+                if (!firstPass) {
+                  pw.write("\n");
+                }
+                pw.write(sc.nextLine());
+                firstPass = false;
             }
             pw.close();
             fw.close();

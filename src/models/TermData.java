@@ -99,7 +99,7 @@ public class TermData {
     public String formatData() {
         String str = new String();
         for (Term indx : this.getTermList()) {
-            str += indx.getDefinition() + ";" + indx.getValue() + ";" + indx.getScore() + ";\n";
+            str += indx.getDefinition() + ";" + indx.getValue() + ";" + indx.getScore() + ";";
         }
         return str;
     }
