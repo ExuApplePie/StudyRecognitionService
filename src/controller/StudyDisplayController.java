@@ -7,6 +7,7 @@ package controller;
 
 import application.StudyDisplay;
 import java.io.File;
+import java.io.FileNotFoundException;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -101,15 +102,12 @@ public class StudyDisplayController {
                 (ActionEvent event) -> {
                     File file = StudyDisplayController.showOpenDialog();
                     try {
-                        System.out.println("1");
                         this.data.loadData(file);
-                    } catch (NullPointerException e) {
-                        System.out.println("2");
+                    } catch (NullPointerException | FileNotFoundException e) {
+                        
                     } catch (NumberFormatException e) {
-                        System.out.println("3");
                         this.data.initializeData(file);
                     }
-                    System.out.println("4 ");
                 }
         );
     }

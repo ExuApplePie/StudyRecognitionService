@@ -34,7 +34,7 @@ public class StudyFiles {
             boolean firstPass = true;
             while (sc.hasNext()) {
                 if (!firstPass) {
-                  pw.write("\n");
+                    pw.write("\n");
                 }
                 pw.write(sc.nextLine());
                 firstPass = false;
@@ -68,8 +68,10 @@ public class StudyFiles {
     public static void loadUserData(TermData data) {
         try {
             data.loadData(new File(System.getProperty("user.dir") + "/UserData.txt"));
-        } catch (NumberFormatException e) {
-            System.out.println("no user data to import");
+        } catch (FileNotFoundException ex) {
+            StudyFiles.saveUserData(data.formatData());
+        } catch (NumberFormatException ex) {
+            System.err.println(ex); //this most likely shouldn't ever occur unless user modifies file
         }
     }
 

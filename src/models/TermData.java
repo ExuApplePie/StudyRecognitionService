@@ -63,8 +63,8 @@ public class TermData {
         }
     }
 
-    public void loadData(File file) {
-        try {
+    public void loadData(File file) throws FileNotFoundException, NumberFormatException {
+//        try {
             Scanner sc = new Scanner(file);
             sc.useDelimiter(";");
             this.removeData();
@@ -76,9 +76,9 @@ public class TermData {
 //                i++;
             }
             sc.close();
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(TermData.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        } catch (FileNotFoundException | NumberFormatException ex) {
+//            System.err.println(ex);
+//        }
     }
 
     public void saveData(File file) {
@@ -95,7 +95,7 @@ public class TermData {
             Logger.getLogger(TermData.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public String formatData() {
         String str = new String();
         for (Term indx : this.getTermList()) {
@@ -103,7 +103,7 @@ public class TermData {
         }
         return str;
     }
-    
+
     private void removeData() {
         termList.clear();
     }
