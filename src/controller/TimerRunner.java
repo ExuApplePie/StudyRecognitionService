@@ -29,17 +29,15 @@ public class TimerRunner {
             @Override
             public void run() {
                 StudyDisplayController.showTimerEndWindow(window);
+                playNoise("alarm.wav");
                 this.cancel();
             }
         }, (long) (min * 60 * 1000)); //*60 for minutes
     }
     
     public void playNoise(String url) {
-        try {
-            
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
+        MusicPlayer mp = new MusicPlayer();
+        mp.playMusic(url, 0.2, true);
     }
     
     public void setNoise() {
