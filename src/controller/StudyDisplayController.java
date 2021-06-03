@@ -10,18 +10,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import models.TermData;
@@ -34,12 +34,14 @@ import models.SRS;
 public class StudyDisplayController {
 
     private TermData data;
+    private StudyDisplay backendModels;
 
-    public void initData(TermData data) {
+    public void initData(TermData data, StudyDisplay backendModels) {
         if (this.data != null) {
             throw new IllegalStateException("Data can only be initialized once");
         }
-
+        
+        this.backendModels = backendModels;
         this.data = data;
     }
 
@@ -85,6 +87,7 @@ public class StudyDisplayController {
                     boolean b = srs.checkAns(ansField.getText(), questionLabel.getText()); //replace the two parameters with getting them from the text areas
                     if (b) {
                         scoreField.setText("correct (+1) Score: " + srs.getScore(questionLabel.getText()));
+                        
                     } else {
                         scoreField.setText("incorrect (-1) Score: " + srs.getScore(questionLabel.getText()));
                     }

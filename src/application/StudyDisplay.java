@@ -1,16 +1,11 @@
 package application;
 
 import controller.StudyDisplayController;
-import models.StudyFiles;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import models.StudyFiles;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -19,7 +14,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import models.SRS;
@@ -101,6 +95,27 @@ public class StudyDisplay extends Application {
         return button;
     }
 
+    private ImageView imageView(String pathToImage) {
+        FileInputStream input = null;
+        try {
+            input = new FileInputStream(pathToImage);
+        } catch (FileNotFoundException ex) {
+            System.err.println(ex);
+        }
+        Image image = new Image(input);
+        ImageView imageView = new ImageView(image);
+        imageView.setVisible(false);
+        imageView.setFitWidth(100);
+        imageView.setPreserveRatio(true);
+        imageView.setSmooth(true);
+        imageView.setCache(true);
+        return imageView;
+    }
+
+    public static void setCheckImageVisibility(boolean visibility) {
+//        checkMarkImage.setVisible(visibility);
+    }
+
 //
 //    private Button definitionButton() {
 //        Button button = new Button("Print Bye World");
@@ -119,6 +134,7 @@ public class StudyDisplay extends Application {
     TextField ansField = textField("Type your answers here");
     TextField scoreField = textField("Your score for the term shows up here");
     TextField timerField = textField("type how long the timer should be");
+    ImageView checkMarkImage = imageView(System.getProperty("user.dir") + "/images/check_mark.jpg");
 
     private void addControls() {
 //        gridPane.getRowConstraints().add(new RowConstraints(100));
@@ -143,17 +159,19 @@ public class StudyDisplay extends Application {
         gridPane.add(startTimerButton, 4, 0);
         gridPane.add(timerField, 4, 1);
         controller.startTimer(startTimerButton, timerField);
+
+        gridPane.add(checkMarkImage, 2, 4);
     }
 
     private void startForm() {
-        controller.initData(data);
+        controller.initData(data, StudyDisplay()); //move this method around???? i need to make it so i can initialize with my models;
         studySet.initData(data);
         StudyFiles.loadUserData(data);
         gridPane = new GridPane();
         Scene scene = new Scene(gridPane, 1600, 900);
         Stage stage = new Stage();
         stage.setOnCloseRequest((WindowEvent t) -> {
-            StudyFiles.saveUserData(data.formatData()); // move this out of here as it won't close unless there's data
+            StudyFiles.saveUserData(data.formatData()); //save user data on close
             Platform.exit();
             System.exit(0);
         });
