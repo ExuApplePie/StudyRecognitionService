@@ -34,80 +34,69 @@ import models.SRS;
 public class StudyDisplayController {
 
     private TermData data;
-    private StudyDisplay backendModels;
+    private StudyDisplay mainDisplay;
+    private SRS studySet;
 
-    public void initData(TermData data, StudyDisplay backendModels) {
-        if (this.data != null) {
-            throw new IllegalStateException("Data can only be initialized once");
-        }
-        
-        this.backendModels = backendModels;
+    public StudyDisplayController(TermData data, StudyDisplay mainDisplay, SRS studySet) {
+        this.mainDisplay = mainDisplay;
         this.data = data;
+        this.studySet = studySet;
     }
 
-    public void load() {
-        FileChooser chooser = new FileChooser();
-        File file = chooser.showOpenDialog(null);
+    public void initControls() {
+        showDefinition();
+        showValue();
+        checkAnswerOnPress();
+        importData();
+        saveData();
+        startTimer();
     }
-
-    public void save() {
-        FileChooser chooser = new FileChooser();
-        File file = chooser.showSaveDialog(null);
-    }
-
-    public void setPressAction(Button button, String str) {
-        button.setOnAction(
+    
+    public void showDefinition() {
+        this.mainDisplay.definitionButton.setOnAction(
                 (ActionEvent event) -> {
-                    System.out.println(str);
-                }
-        );
-    }
-
-    public void showDefinition(Button button, Label label, TextInputControl textControl, SRS srs) {
-        button.setOnAction(
-                (ActionEvent event) -> {
-                    label.setText(srs.displayDefinition());
-                    textControl.requestFocus();
+                    this.mainDisplay.questionLabel.setText(this.studySet.displayDefinition());
+                    this.mainDisplay.ansField.requestFocus();
                 });
     }
 
-    public void showValue(Button button, Label label, TextInputControl textControl, SRS srs) {
-        button.setOnAction(
+    public void showValue() {
+        this.mainDisplay.valueButton.setOnAction(
                 (ActionEvent event) -> {
-                    label.setText(srs.displayValue());
-                    textControl.requestFocus();
+                    this.mainDisplay.questionLabel.setText(this.studySet.displayValue());
+                    this.mainDisplay.ansField.requestFocus();
                 });
 
     }
 
-    public void checkAnswerOnPress(Label questionLabel, TextInputControl ansField, TextInputControl scoreField, SRS srs) {
-        ansField.setOnKeyPressed((KeyEvent event) -> {
+    public void checkAnswerOnPress() {
+        this.mainDisplay.ansField.setOnKeyPressed((KeyEvent event) -> {
             if (event.getCode() == KeyCode.ENTER) {
                 try {
-                    boolean b = srs.checkAns(ansField.getText(), questionLabel.getText()); //replace the two parameters with getting them from the text areas
+                    boolean b = this.studySet.checkAns(this.mainDisplay.ansField.getText(), this.mainDisplay.questionLabel.getText()); //replace the two parameters with getting them from the text areas
                     if (b) {
-                        scoreField.setText("correct (+1) Score: " + srs.getScore(questionLabel.getText()));
+                        this.mainDisplay.scoreField.setText("correct (+1) Score: " + this.studySet.getScore(this.mainDisplay.questionLabel.getText()));
                         
                     } else {
-                        scoreField.setText("incorrect (-1) Score: " + srs.getScore(questionLabel.getText()));
+                        this.mainDisplay.scoreField.setText("incorrect (-1) Score: " + this.studySet.getScore(this.mainDisplay.questionLabel.getText()));
                     }
                 } catch (IllegalArgumentException e) {
 //                    System.out.println("pressed enter with nothing"); 
                 }
-                questionLabel.setText(""); //clear it so that you can't add to the score for the same answer multiple times
-                ansField.setText("");
+                this.mainDisplay.questionLabel.setText(""); //clear it so that you can't add to the score for the same answer multiple times
+                this.mainDisplay.ansField.setText("");
             }
         });
     }
 
-    public void importData(Button button) {
-        button.setOnAction(
+    public void importData() {
+        this.mainDisplay.importDataButton.setOnAction(
                 (ActionEvent event) -> {
                     File file = StudyDisplayController.showOpenDialog();
                     try {
                         this.data.loadData(file);
                     } catch (NullPointerException | FileNotFoundException e) {
-                        
+                        //do nothing if user chooses nothing
                     } catch (NumberFormatException e) {
                         this.data.initializeData(file);
                     }
@@ -115,25 +104,25 @@ public class StudyDisplayController {
         );
     }
 
-    public void saveData(Button button) {
-        button.setOnAction((ActionEvent event) -> {
+    public void saveData() {
+        this.mainDisplay.saveDataButton.setOnAction((ActionEvent event) -> {
             File file = StudyDisplayController.showSaveDialog();
             this.data.saveData(file);
         });
     }
 
-    public void startTimer(Button button, TextInputControl timeParam) {
-        button.setOnAction((ActionEvent event) -> {
+    public void startTimer() {
+        this.mainDisplay.startTimerButton.setOnAction((ActionEvent event) -> {
             TimerRunner tr = new TimerRunner();
             try {
-                tr.startTimer(Double.parseDouble(timeParam.getText()), button.getScene().getWindow());
+                tr.startTimer(Double.parseDouble(this.mainDisplay.timerField.getText()));
             } catch (NumberFormatException e) {
-                timeParam.setText("use a real decimal number please");
+                this.mainDisplay.timerField.setText("use a real decimal number please");
             }
         });
     }
 
-    public static void showTimerEndWindow(Window window) {
+    public static void showTimerEndWindow() {
         Platform.runLater(() -> {
             Stage popupWindow = new Stage();
             popupWindow.initModality(Modality.APPLICATION_MODAL);

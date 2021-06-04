@@ -28,15 +28,15 @@ import models.TermData;
  *
  * @author 84038001
  */
-public class StudyDisplay extends Application {
+public class StudyDisplay {
 
     public void updateDisplay() {
     }
 
-    private GridPane gridPane;
-    private TermData data = new TermData();
-    private StudyDisplayController controller = new StudyDisplayController();
-    private SRS studySet = new SRS();
+//    private GridPane gridPane;
+//    private TermData data = new TermData();
+//    private StudyDisplayController controller = new StudyDisplayController();
+//    private SRS studySet = new SRS();
 
 //    private void keyEvent (KeyEvent evt) {
 //        if (evt.getCode() == KeyCode.ENTER) {
@@ -125,44 +125,45 @@ public class StudyDisplay extends Application {
 //        });
 //        return button;
 //    }
-    Button valueButton = button("Random Definition"); //corresponds to values - name appearing on button is different for user convenience
-    Button definitionButton = button("Random Term"); //corresponds to definitions
-    Button importDataButton = button("Import word list");
-    Button saveDataButton = button("Save word list");
-    Button startTimerButton = button("Start Timer");
-    Label questionLabel = label("Questions Appear Here");
-    TextField ansField = textField("Type your answers here");
-    TextField scoreField = textField("Your score for the term shows up here");
-    TextField timerField = textField("type how long the timer should be");
-    ImageView checkMarkImage = imageView(System.getProperty("user.dir") + "/images/check_mark.jpg");
+    public Button valueButton = button("Random Definition"); //corresponds to values - name appearing on button is different for user convenience
+    public Button definitionButton = button("Random Term"); //corresponds to definitions
+    public Button importDataButton = button("Import word list");
+    public Button saveDataButton = button("Save word list");
+    public Button startTimerButton = button("Start Timer");
+    public Label questionLabel = label("Questions Appear Here");
+    public TextField ansField = textField("Type your answers here");
+    public TextField scoreField = textField("Your score for the term shows up here");
+    public TextField timerField = textField("type how long the timer should be");
+    public ImageView checkMarkImage = imageView(System.getProperty("user.dir") + "/images/check_mark.jpg");
 
-    private void addControls() {
+    public void addControls(GridPane gridPane) {
 //        gridPane.getRowConstraints().add(new RowConstraints(100));
 //        setAction();
         gridPane.add(valueButton, 0, 0);
-        controller.showValue(valueButton, questionLabel, ansField, studySet);
+//        controller.showValue(valueButton, questionLabel, ansField, studySet);
 
         gridPane.add(definitionButton, 0, 1);
-        controller.showDefinition(definitionButton, questionLabel, ansField, studySet);
+//        controller.showDefinition(definitionButton, questionLabel, ansField, studySet);
 
         gridPane.add(questionLabel, 1, 1);
         gridPane.add(ansField, 1, 2);
         gridPane.add(scoreField, 1, 3);
-        controller.checkAnswerOnPress(questionLabel, ansField, scoreField, studySet);
+//        controller.checkAnswerOnPress(questionLabel, ansField, scoreField, studySet);
 
         gridPane.add(importDataButton, 3, 0);
-        controller.importData(importDataButton);
+//        controller.importData(importDataButton);
 
         gridPane.add(saveDataButton, 3, 1);
-        controller.saveData(saveDataButton);
+//        controller.saveData(saveDataButton);
 
         gridPane.add(startTimerButton, 4, 0);
         gridPane.add(timerField, 4, 1);
-        controller.startTimer(startTimerButton, timerField);
+//        controller.startTimer(startTimerButton, timerField);
 
         gridPane.add(checkMarkImage, 2, 4);
     }
 
+    /*
     private void startForm() {
         controller.initData(data, StudyDisplay()); //move this method around???? i need to make it so i can initialize with my models;
         studySet.initData(data);
@@ -185,7 +186,7 @@ public class StudyDisplay extends Application {
     public void start(Stage primaryStage) throws Exception {
         startForm();
     }
-
+*/
 //    public void setText(TextField txtFld, String newText) {
 //        Platform.runLater(() -> {
 //            txtFld.setText(newText);

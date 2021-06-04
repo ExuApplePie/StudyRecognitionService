@@ -21,14 +21,7 @@ import javafx.collections.ObservableList;
  */
 public class SRS {
 
-    public SRS() {
-    }
-
-    public void initData(TermData data) {
-        if (this.data != null) {
-            throw new IllegalStateException("Data can only be initialized once");
-        }
-
+    public SRS(TermData data) {
         this.data = data;
     }
 

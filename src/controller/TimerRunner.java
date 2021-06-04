@@ -24,11 +24,11 @@ public class TimerRunner {
     }
     private Timer timer;
     
-    public void startTimer(double min, Window window) {
+    public void startTimer(double min) {
         this.timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                StudyDisplayController.showTimerEndWindow(window);
+                StudyDisplayController.showTimerEndWindow();
                 playNoise("alarm.wav");
                 this.cancel();
             }
