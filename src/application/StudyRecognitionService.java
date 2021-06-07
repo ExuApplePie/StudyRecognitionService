@@ -4,6 +4,8 @@ import controller.StudyDisplayController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -24,18 +26,15 @@ public class StudyRecognitionService extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-
-        GridPane gridPane = new GridPane();
+        
         TermData data = new TermData();
         SRS studySet = new SRS(data);
         StudyDisplay mainDisplay = new StudyDisplay();
         StudyDisplayController controller = new StudyDisplayController(data, mainDisplay, studySet);
         StudyFiles.loadUserData(data);
 
-        Scene scene = new Scene(gridPane, 1600, 900);
-        Stage stage = new Stage();
 
-        stage.setOnCloseRequest(
+        primaryStage.setOnCloseRequest(
                 (WindowEvent t) -> {
                     StudyFiles.saveUserData(data.formatData()); //save user data on close
                     Platform.exit();
@@ -43,11 +42,11 @@ public class StudyRecognitionService extends Application {
                 }
         );
 
-        mainDisplay.addControls(gridPane);
-        controller.initControls();
-        stage.setTitle("Study Program");
-        stage.setScene(scene);
-        stage.show();
+        mainDisplay.addControls();
+        controller.initControls(primaryStage);
+        primaryStage.setTitle("Study Program");
+        primaryStage.setScene(mainDisplay.scene1);
+        primaryStage.show();
     }
 
     public static void main(String[] args) {

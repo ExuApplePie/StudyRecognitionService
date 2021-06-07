@@ -1,5 +1,1 @@
-apple;fruit;0;
-orange juice;drink;0;
-phone;electronic;1;
-chips;junk food;0;
-car;automobile;0;
+apple;fruit;1;

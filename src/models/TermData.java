@@ -52,10 +52,12 @@ public class TermData {
     public void initializeData(File file) {
         try {
             Scanner sc = new Scanner(file);
+
             sc.useDelimiter(";");
             this.removeData();
             while (sc.hasNext()) {
                 termList.add(new Term(sc.next(), sc.next(), 0));
+                sc.nextLine();
             }
             sc.close();
         } catch (FileNotFoundException ex) {
@@ -65,17 +67,19 @@ public class TermData {
 
     public void loadData(File file) throws FileNotFoundException, NumberFormatException {
 //        try {
-            Scanner sc = new Scanner(file);
-            sc.useDelimiter(";");
-            this.removeData();
+        Scanner sc = new Scanner(file);
+
+        sc.useDelimiter(";");
+        this.removeData();
 //            int i = 0;
-            while (sc.hasNext()) {
+        while (sc.hasNext()) {
 //                System.out.printf("Definition: %s\nValue: %s\nRaw Number: %d\n", sc.next(), sc.next(), Integer.parseInt(sc.next()));
-                termList.add(new Term(sc.next(), sc.next(), Integer.parseInt(sc.next())));
+            termList.add(new Term(sc.next(), sc.next(), Integer.parseInt(sc.next())));
+            sc.nextLine();
 //                System.out.println(termList.get(i).toString());
 //                i++;
-            }
-            sc.close();
+        }
+        sc.close();
 //        } catch (FileNotFoundException | NumberFormatException ex) {
 //            System.err.println(ex);
 //        }

@@ -6,14 +6,20 @@ import java.io.FileNotFoundException;
 import models.StudyFiles;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.geometry.HPos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import models.SRS;
@@ -37,7 +43,6 @@ public class StudyDisplay {
 //    private TermData data = new TermData();
 //    private StudyDisplayController controller = new StudyDisplayController();
 //    private SRS studySet = new SRS();
-
 //    private void keyEvent (KeyEvent evt) {
 //        if (evt.getCode() == KeyCode.ENTER) {
 //            System.out.println("Enter was pressed");
@@ -45,10 +50,11 @@ public class StudyDisplay {
 //    }
     private Label label(String text) {
         Label label = new Label();
-        label.setLayoutX(0);
-        label.setLayoutY(0);
-        label.setMaxWidth(500);
-        label.setMinHeight(400);
+//        label.setLayoutX(0);
+//        label.setLayoutY(0);
+//        label.setMaxWidth(500);
+//        label.setMinHeight(400);
+        label.setMaxSize(Double.MAX_VALUE, Double.MIN_VALUE);
         label.setText(text);
 
         return label;
@@ -56,10 +62,10 @@ public class StudyDisplay {
 
     private TextArea textArea() {
         TextArea textArea = new TextArea();
-        textArea.setLayoutX(0);
-        textArea.setLayoutY(0);
-        textArea.setMaxWidth(450);
-        textArea.setMinHeight(380);
+//        textArea.setLayoutX(0);
+//        textArea.setLayoutY(0);
+//        textArea.setMaxWidth(450);
+//        textArea.setMinHeight(380);
         textArea.setText("this is a text area");
 //        textArea.setOnKeyPressed(new EventHandler<KeyEvent>() {
 //            @Override
@@ -75,10 +81,11 @@ public class StudyDisplay {
 
     private TextField textField(String text) {
         TextField textField = new TextField();
-        textField.setLayoutX(0);
-        textField.setLayoutY(1);
-        textField.setMinWidth(450);
-        textField.setMinHeight(25);
+//        textField.setLayoutX(0);
+//        textField.setLayoutY(1);
+//        textField.setMinWidth(450);
+//        textField.setMinHeight(25);
+        textField.setMaxSize(Double.MAX_VALUE, Double.MIN_VALUE);
         textField.setText(text);
 //        textField.setOnKeyPressed(new EventHandler<KeyEvent>(){
 //            @Override
@@ -91,7 +98,9 @@ public class StudyDisplay {
 
     private Button button(String title) {
         Button button = new Button(title);
-        button.setPrefSize(200, 200);
+        button.setMaxSize(Double.MAX_VALUE, Double.MIN_VALUE);
+
+//        button.setPrefSize(200, 200);
         return button;
     }
 
@@ -112,8 +121,23 @@ public class StudyDisplay {
         return imageView;
     }
 
-    public static void setCheckImageVisibility(boolean visibility) {
-//        checkMarkImage.setVisible(visibility);
+    private void setConstraints(GridPane gp) {
+        gp.getColumnConstraints().clear();
+        gp.getRowConstraints().clear();
+        for (int j = 0; j < gp.getColumnCount(); j++) {
+            ColumnConstraints cc = new ColumnConstraints();
+            cc.setHalignment(HPos.CENTER);
+            cc.setFillWidth(true);
+            cc.setHgrow(Priority.ALWAYS);
+            gp.getColumnConstraints().add(cc);
+        }
+        for (int j = 0; j < gp.getRowCount(); j++) {
+            RowConstraints rc = new RowConstraints();
+            rc.setValignment(VPos.CENTER);
+            rc.setFillHeight(true);
+            rc.setVgrow(Priority.ALWAYS);
+            gp.getRowConstraints().add(rc);
+        }
     }
 
 //
@@ -135,33 +159,65 @@ public class StudyDisplay {
     public TextField scoreField = textField("Your score for the term shows up here");
     public TextField timerField = textField("type how long the timer should be");
     public ImageView checkMarkImage = imageView(System.getProperty("user.dir") + "/images/check_mark.jpg");
+    public ImageView redXImage = imageView(System.getProperty("user.dir") + "/images/red_x.png");
 
-    public void addControls(GridPane gridPane) {
+    public GridPane gridPane1 = new GridPane();
+    public GridPane gridPane2 = new GridPane();
+    public Scene scene1 = new Scene(gridPane1, 800, 800);
+    public Scene scene2 = new Scene(gridPane2, 800, 800);
+    public Button scene1Button = button("Studying");
+    public Button scene2Button = button("Settings");
+    public Button toggleFullScreenButton = button("Toggle Full Screen");
+
+    public void addControls() {
 //        gridPane.getRowConstraints().add(new RowConstraints(100));
 //        setAction();
-        gridPane.add(valueButton, 0, 0);
+        gridPane1.setGridLinesVisible(true);
+        gridPane2.setGridLinesVisible(true);
+
+        gridPane1.add(scene2Button, 3, 0);
+        gridPane2.add(scene1Button, 3, 0);
+
+        gridPane1.add(valueButton, 0, 0);
 //        controller.showValue(valueButton, questionLabel, ansField, studySet);
 
-        gridPane.add(definitionButton, 0, 1);
+        gridPane1.add(definitionButton, 1, 0);
 //        controller.showDefinition(definitionButton, questionLabel, ansField, studySet);
 
-        gridPane.add(questionLabel, 1, 1);
-        gridPane.add(ansField, 1, 2);
-        gridPane.add(scoreField, 1, 3);
+        gridPane1.add(questionLabel, 0, 1);
+        gridPane1.add(ansField, 0, 2);
+        gridPane1.add(scoreField, 0, 3);
+        gridPane1.add(toggleFullScreenButton, 0, 4);
 //        controller.checkAnswerOnPress(questionLabel, ansField, scoreField, studySet);
+        gridPane1.add(checkMarkImage, 1, 1);
+//        checkMarkImage.fitWidthProperty().bind(gridPane1.widthProperty());
+//        checkMarkImage.fitHeightProperty().bind(gridPane1.heightProperty());
+        gridPane1.add(redXImage, 2, 1);
 
-        gridPane.add(importDataButton, 3, 0);
+        gridPane2.add(importDataButton, 0, 0);
 //        controller.importData(importDataButton);
 
-        gridPane.add(saveDataButton, 3, 1);
+        gridPane2.add(saveDataButton, 0, 1);
 //        controller.saveData(saveDataButton);
 
-        gridPane.add(startTimerButton, 4, 0);
-        gridPane.add(timerField, 4, 1);
+        gridPane2.add(startTimerButton, 2, 0);
+        gridPane2.add(timerField, 2, 1);
 //        controller.startTimer(startTimerButton, timerField);
 
-        gridPane.add(checkMarkImage, 2, 4);
+        setConstraints(gridPane1);
+        setConstraints(gridPane2);
     }
+
+    public void clearText() {
+        questionLabel.setText("");
+        ansField.setText("");
+    }
+
+    public void hideImages() {
+        checkMarkImage.setVisible(false);
+        redXImage.setVisible(false);
+    }
+
 
     /*
     private void startForm() {
@@ -186,7 +242,7 @@ public class StudyDisplay {
     public void start(Stage primaryStage) throws Exception {
         startForm();
     }
-*/
+     */
 //    public void setText(TextField txtFld, String newText) {
 //        Platform.runLater(() -> {
 //            txtFld.setText(newText);

@@ -43,20 +43,24 @@ public class StudyDisplayController {
         this.studySet = studySet;
     }
 
-    public void initControls() {
+    public void initControls(Stage primaryStage) {
         showDefinition();
         showValue();
         checkAnswerOnPress();
         importData();
         saveData();
         startTimer();
+        changeToScene1(primaryStage);
+        changeToScene2(primaryStage);
+        toggleFullScreen(primaryStage);
     }
-    
+
     public void showDefinition() {
         this.mainDisplay.definitionButton.setOnAction(
                 (ActionEvent event) -> {
                     this.mainDisplay.questionLabel.setText(this.studySet.displayDefinition());
                     this.mainDisplay.ansField.requestFocus();
+                    this.mainDisplay.hideImages();
                 });
     }
 
@@ -65,6 +69,7 @@ public class StudyDisplayController {
                 (ActionEvent event) -> {
                     this.mainDisplay.questionLabel.setText(this.studySet.displayValue());
                     this.mainDisplay.ansField.requestFocus();
+                    this.mainDisplay.hideImages();
                 });
 
     }
@@ -76,15 +81,15 @@ public class StudyDisplayController {
                     boolean b = this.studySet.checkAns(this.mainDisplay.ansField.getText(), this.mainDisplay.questionLabel.getText()); //replace the two parameters with getting them from the text areas
                     if (b) {
                         this.mainDisplay.scoreField.setText("correct (+1) Score: " + this.studySet.getScore(this.mainDisplay.questionLabel.getText()));
-                        
+                        this.mainDisplay.checkMarkImage.setVisible(b);
                     } else {
                         this.mainDisplay.scoreField.setText("incorrect (-1) Score: " + this.studySet.getScore(this.mainDisplay.questionLabel.getText()));
+                        this.mainDisplay.redXImage.setVisible(!b);
                     }
                 } catch (IllegalArgumentException e) {
 //                    System.out.println("pressed enter with nothing"); 
                 }
-                this.mainDisplay.questionLabel.setText(""); //clear it so that you can't add to the score for the same answer multiple times
-                this.mainDisplay.ansField.setText("");
+                this.mainDisplay.clearText();
             }
         });
     }
@@ -119,6 +124,22 @@ public class StudyDisplayController {
             } catch (NumberFormatException e) {
                 this.mainDisplay.timerField.setText("use a real decimal number please");
             }
+        });
+    }
+
+    public void changeToScene1(Stage primaryStage) {
+        this.mainDisplay.scene1Button.setOnAction(e -> primaryStage.setScene(this.mainDisplay.scene1));
+    }
+
+    public void changeToScene2(Stage primaryStage) {
+        this.mainDisplay.scene2Button.setOnAction(e -> primaryStage.setScene(this.mainDisplay.scene2));
+
+    }
+
+    public void toggleFullScreen(Stage primaryStage) {
+        this.mainDisplay.toggleFullScreenButton.setOnAction((ActionEvent event) -> {
+            boolean b = primaryStage.isFullScreen();
+            primaryStage.setFullScreen(!b);
         });
     }
 

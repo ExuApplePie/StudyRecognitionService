@@ -5,13 +5,7 @@
  */
 package controller;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static org.quartz.JobBuilder.newJob;
-import org.quartz.JobDetail;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.impl.StdSchedulerFactory;
+
 
 /**
  *
@@ -22,21 +16,9 @@ public class Reminders {
     public Reminders() {
        
     }
-    Scheduler scheduler;
     
 
     public void displayNotification() {
-        try {
-            scheduler = StdSchedulerFactory.getDefaultScheduler();
-            
-            scheduler.start();
-            
-//            JobDetail job = newJob(TimerRunner.class)
-//                    .withIdentity("job1", "group1")
-//                    .build();
-        } catch (SchedulerException ex) {
-            System.err.println(ex);
-        }
 
     }
 
