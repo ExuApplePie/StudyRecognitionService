@@ -34,7 +34,8 @@ public class StudyFiles {
             boolean firstPass = true;
             while (sc.hasNext()) {
                 if (!firstPass) {
-                    pw.write("\n");
+//                    pw.write("\n");
+                    pw.println();
                 }
                 pw.write(sc.nextLine());
                 firstPass = false;

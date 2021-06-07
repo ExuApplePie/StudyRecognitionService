@@ -61,6 +61,7 @@ public class StudyDisplayController {
                     this.mainDisplay.questionLabel.setText(this.studySet.displayDefinition());
                     this.mainDisplay.ansField.requestFocus();
                     this.mainDisplay.hideImages();
+                    System.out.println(this.data.formatData());
                 });
     }
 

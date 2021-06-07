@@ -172,8 +172,8 @@ public class StudyDisplay {
     public void addControls() {
 //        gridPane.getRowConstraints().add(new RowConstraints(100));
 //        setAction();
-        gridPane1.setGridLinesVisible(true);
-        gridPane2.setGridLinesVisible(true);
+//        gridPane1.setGridLinesVisible(true);
+//        gridPane2.setGridLinesVisible(true);
 
         gridPane1.add(scene2Button, 3, 0);
         gridPane2.add(scene1Button, 3, 0);

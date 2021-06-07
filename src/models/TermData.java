@@ -57,7 +57,6 @@ public class TermData {
             this.removeData();
             while (sc.hasNext()) {
                 termList.add(new Term(sc.next(), sc.next(), 0));
-                sc.nextLine();
             }
             sc.close();
         } catch (FileNotFoundException ex) {
@@ -74,8 +73,10 @@ public class TermData {
 //            int i = 0;
         while (sc.hasNext()) {
 //                System.out.printf("Definition: %s\nValue: %s\nRaw Number: %d\n", sc.next(), sc.next(), Integer.parseInt(sc.next()));
+            sc.useDelimiter(";");
             termList.add(new Term(sc.next(), sc.next(), Integer.parseInt(sc.next())));
-            sc.nextLine();
+            sc.useDelimiter("\n");
+            sc.next();
 //                System.out.println(termList.get(i).toString());
 //                i++;
         }
@@ -91,7 +92,8 @@ public class TermData {
             fw = new FileWriter(file);
             PrintWriter pw = new PrintWriter(fw);
             for (int i = 0; i < termList.size(); i++) { //use format data here 
-                pw.print(termList.get(i).getDefinition() + ";" + termList.get(i).getValue() + ";" + termList.get(i).getScore() + ";");
+//                pw.print(termList.get(i).getDefinition() + ";" + termList.get(i).getValue() + ";" + termList.get(i).getScore() + ";");
+                pw.print(this.formatData());
             }
             pw.close();
             fw.close();
