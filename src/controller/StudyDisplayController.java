@@ -65,7 +65,7 @@ public class StudyDisplayController {
                 (ActionEvent event) -> {
                     this.mainDisplay.questionLabel.setText(this.studySet.displayDefinition());
                     this.mainDisplay.ansField.requestFocus();
-                    this.mainDisplay.hideImages();
+//                    this.mainDisplay.hideImages();
                 });
     }
 
@@ -74,7 +74,7 @@ public class StudyDisplayController {
                 (ActionEvent event) -> {
                     this.mainDisplay.questionLabel.setText(this.studySet.displayValue());
                     this.mainDisplay.ansField.requestFocus();
-                    this.mainDisplay.hideImages();
+//                    this.mainDisplay.hideImages();
                 });
 
     }
@@ -95,8 +95,17 @@ public class StudyDisplayController {
 //                    System.out.println("pressed enter with nothing"); 
                 }
                 this.mainDisplay.clearText();
+                this.displayNewQuestion();
             }
         });
+    }
+
+    public void displayNewQuestion() {
+        if (this.studySet.getDefaultMode()) {
+            this.mainDisplay.valueButton.fire();
+        } else {
+            this.mainDisplay.definitionButton.fire();
+        }
     }
 
     public void importData() {
@@ -178,9 +187,9 @@ public class StudyDisplayController {
             this.updateTermList();
         });
     }
-    
+
     public void removeTerm() {
-        this.mainDisplay.removeTermButton.setOnAction((ActionEvent event)->{
+        this.mainDisplay.removeTermButton.setOnAction((ActionEvent event) -> {
             int selectedIndx = this.mainDisplay.termList.getSelectionModel().getSelectedIndex();
             this.mainDisplay.termList.getItems().remove(selectedIndx);
             this.data.getTermList().remove(selectedIndx);

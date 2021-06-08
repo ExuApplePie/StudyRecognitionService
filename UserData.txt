@@ -1,6 +1,6 @@
-apple;fruit;1;
-orange juice;drink;1;
-phone;electronic;2;
-chips;junk food;2;
-car;automobile;0;
-dog;animal;1;
+apple;fruit;3;
+orange juice;drink;2;
+phone;electronic;4;
+chips;junk food;4;
+car;automobile;4;
+dog;animal;2;

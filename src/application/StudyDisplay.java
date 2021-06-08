@@ -55,7 +55,7 @@ public class StudyDisplay {
 //        label.setLayoutY(0);
 //        label.setMaxWidth(500);
 //        label.setMinHeight(400);
-        label.setMaxSize(Double.MAX_VALUE, Double.MIN_VALUE);
+        label.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         label.setText(text);
 
         return label;
@@ -86,7 +86,7 @@ public class StudyDisplay {
 //        textField.setLayoutY(1);
 //        textField.setMinWidth(450);
 //        textField.setMinHeight(25);
-        textField.setMaxSize(Double.MAX_VALUE, Double.MIN_VALUE);
+        textField.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         textField.setText(text);
 //        textField.setOnKeyPressed(new EventHandler<KeyEvent>(){
 //            @Override
@@ -99,7 +99,7 @@ public class StudyDisplay {
 
     private Button button(String title) {
         Button button = new Button(title);
-        button.setMaxSize(Double.MAX_VALUE, Double.MIN_VALUE);
+        button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
 //        button.setPrefSize(200, 200);
         return button;
@@ -212,7 +212,7 @@ public class StudyDisplay {
         gridPane2.add(timerField, 2, 1);
         gridPane2.add(setDailyReminderButton, 1, 0);
         gridPane2.add(dateField, 1, 1);
-        gridPane2.add(termList, 0, 3);
+        gridPane2.add(termList, 0, 3, 1, 2);
         gridPane2.add(definitionField, 1, 3);
         gridPane2.add(valueField, 1, 4);
         gridPane2.add(addTermButton, 2, 3);
