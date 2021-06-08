@@ -11,6 +11,7 @@ import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -155,11 +156,15 @@ public class StudyDisplay {
     public Button saveDataButton = button("Save word list");
     public Button startTimerButton = button("Start Timer");
     public Button setDailyReminderButton = button("Set daily reminder time");
+    public Button addTermButton = button("Press to add entered term");
+    public Button removeTermButton = button("Press to remove selected term");
     public Label questionLabel = label("Questions Appear Here");
     public TextField ansField = textField("Type your answers here");
     public TextField scoreField = textField("Your score for the term shows up here");
     public TextField timerField = textField("type how long the timer should be");
     public TextField dateField = textField("Enter the time in (HH:MM) of when you want daily reminders to study");
+    public TextField valueField = textField("Enter Definition");//comment below
+    public TextField definitionField = textField("Enter Term"); //again confusing naming but refer to above comment
     public ImageView checkMarkImage = imageView(System.getProperty("user.dir") + "/images/check_mark.jpg");
     public ImageView redXImage = imageView(System.getProperty("user.dir") + "/images/red_x.png");
 
@@ -169,6 +174,7 @@ public class StudyDisplay {
     public Scene scene2 = new Scene(gridPane2, 800, 800);
     public Button scene1Button = button("Studying");
     public Button scene2Button = button("Settings");
+    public ListView termList = new ListView();
     public Button toggleFullScreenButton = button("Toggle Full Screen");
 
     public void addControls() {
@@ -206,6 +212,11 @@ public class StudyDisplay {
         gridPane2.add(timerField, 2, 1);
         gridPane2.add(setDailyReminderButton, 1, 0);
         gridPane2.add(dateField, 1, 1);
+        gridPane2.add(termList, 0, 3);
+        gridPane2.add(definitionField, 1, 3);
+        gridPane2.add(valueField, 1, 4);
+        gridPane2.add(addTermButton, 2, 3);
+        gridPane2.add(removeTermButton, 2, 4);
 //        controller.startTimer(startTimerButton, timerField);
 
         setConstraints(gridPane1);
@@ -221,6 +232,8 @@ public class StudyDisplay {
         checkMarkImage.setVisible(false);
         redXImage.setVisible(false);
     }
+    
+
 
 
     /*

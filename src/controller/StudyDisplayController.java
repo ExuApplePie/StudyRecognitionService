@@ -8,6 +8,7 @@ package controller;
 import application.StudyDisplay;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Scanner;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
@@ -26,6 +27,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import models.TermData;
 import models.SRS;
+import models.Term;
 
 /**
  *
@@ -54,6 +56,8 @@ public class StudyDisplayController {
         this.changeToScene1(primaryStage);
         this.changeToScene2(primaryStage);
         this.toggleFullScreen(primaryStage);
+        this.addTerm();
+        this.removeTerm();
     }
 
     public void showDefinition() {
@@ -106,6 +110,7 @@ public class StudyDisplayController {
                     } catch (NumberFormatException e) {
                         this.data.initializeData(file);
                     }
+                    this.updateTermList();
                 }
         );
     }
@@ -127,28 +132,58 @@ public class StudyDisplayController {
             }
         });
     }
-    
+
     public void setDailyReminders() {
         this.mainDisplay.setDailyReminderButton.setOnAction((ActionEvent event) -> {
             TimerRunner tr = new TimerRunner();
             tr.scheduleDailyReminders(this.mainDisplay.dateField.getText());
             this.mainDisplay.dateField.setText("Sucess!");
         });
-    } 
+    }
 
     public void changeToScene1(Stage primaryStage) {
         this.mainDisplay.scene1Button.setOnAction(e -> primaryStage.setScene(this.mainDisplay.scene1));
     }
 
     public void changeToScene2(Stage primaryStage) {
-        this.mainDisplay.scene2Button.setOnAction(e -> primaryStage.setScene(this.mainDisplay.scene2));
-
+        this.mainDisplay.scene2Button.setOnAction((ActionEvent event) -> {
+            primaryStage.setScene(this.mainDisplay.scene2);
+            this.updateTermList();
+        });
     }
 
     public void toggleFullScreen(Stage primaryStage) {
         this.mainDisplay.toggleFullScreenButton.setOnAction((ActionEvent event) -> {
             boolean b = primaryStage.isFullScreen();
             primaryStage.setFullScreen(!b);
+        });
+    }
+
+    public void updateTermList() {
+        this.mainDisplay.termList.getItems().clear();
+        Scanner sc = new Scanner(this.data.formatData());
+        while (sc.hasNext()) {
+            sc.useDelimiter(";");
+            this.mainDisplay.termList.getItems().add(sc.next() + " " + sc.next() + " " + sc.next());
+            sc.useDelimiter("\n");
+            sc.nextLine();
+        }
+        sc.close();
+    }
+
+    public void addTerm() {
+        this.mainDisplay.addTermButton.setOnAction((ActionEvent event) -> {
+            this.data.getTermList()
+                    .add(new Term(this.mainDisplay.definitionField.getText(), this.mainDisplay.valueField.getText(), 0));
+            this.updateTermList();
+        });
+    }
+    
+    public void removeTerm() {
+        this.mainDisplay.removeTermButton.setOnAction((ActionEvent event)->{
+            int selectedIndx = this.mainDisplay.termList.getSelectionModel().getSelectedIndex();
+            this.mainDisplay.termList.getItems().remove(selectedIndx);
+            this.data.getTermList().remove(selectedIndx);
         });
     }
 

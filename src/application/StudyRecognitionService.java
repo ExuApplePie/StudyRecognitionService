@@ -32,6 +32,7 @@ public class StudyRecognitionService extends Application {
         StudyDisplay mainDisplay = new StudyDisplay();
         StudyDisplayController controller = new StudyDisplayController(data, mainDisplay, studySet);
         StudyFiles.loadUserData(data);
+        controller.updateTermList();
 
 
         primaryStage.setOnCloseRequest(
