@@ -74,7 +74,7 @@ public class SRS {
     public String displayDefinition() {
         Random r = new Random();
         this.setDefaultMode(false);
-        int size = this.data.getTermList().size();
+        int size = this.data.getTermList().size(); 
         return this.data.getTermList().get(r.nextInt(size)).getDefinition();
     }
 

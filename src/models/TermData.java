@@ -68,15 +68,16 @@ public class TermData {
 //        try {
         Scanner sc = new Scanner(file);
 
-        sc.useDelimiter(";");
+//        sc.useDelimiter(";");
         this.removeData();
 //            int i = 0;
         while (sc.hasNext()) {
 //                System.out.printf("Definition: %s\nValue: %s\nRaw Number: %d\n", sc.next(), sc.next(), Integer.parseInt(sc.next()));
             sc.useDelimiter(";");
+//            System.out.println(sc.next() + sc.next() + Integer.parseInt(sc.next()));
             termList.add(new Term(sc.next(), sc.next(), Integer.parseInt(sc.next())));
             sc.useDelimiter("\n");
-            sc.next();
+            sc.nextLine();
 //                System.out.println(termList.get(i).toString());
 //                i++;
         }
@@ -91,10 +92,10 @@ public class TermData {
         try {
             fw = new FileWriter(file);
             PrintWriter pw = new PrintWriter(fw);
-            for (int i = 0; i < termList.size(); i++) { //use format data here 
+//            for (int i = 0; i < termList.size(); i++) { //use format data here 
 //                pw.print(termList.get(i).getDefinition() + ";" + termList.get(i).getValue() + ";" + termList.get(i).getScore() + ";");
                 pw.print(this.formatData());
-            }
+//            }
             pw.close();
             fw.close();
         } catch (IOException ex) {
@@ -105,7 +106,7 @@ public class TermData {
     public String formatData() {
         String str = new String();
         for (Term indx : this.getTermList()) {
-            str += indx.getDefinition() + ";" + indx.getValue() + ";" + indx.getScore() + ";";
+            str += indx.getDefinition() + ";" + indx.getValue() + ";" + indx.getScore() + ";\n";
         }
         return str;
     }

@@ -154,10 +154,12 @@ public class StudyDisplay {
     public Button importDataButton = button("Import word list");
     public Button saveDataButton = button("Save word list");
     public Button startTimerButton = button("Start Timer");
+    public Button setDailyReminderButton = button("Set daily reminder time");
     public Label questionLabel = label("Questions Appear Here");
     public TextField ansField = textField("Type your answers here");
     public TextField scoreField = textField("Your score for the term shows up here");
     public TextField timerField = textField("type how long the timer should be");
+    public TextField dateField = textField("Enter the time in (HH:MM) of when you want daily reminders to study");
     public ImageView checkMarkImage = imageView(System.getProperty("user.dir") + "/images/check_mark.jpg");
     public ImageView redXImage = imageView(System.getProperty("user.dir") + "/images/red_x.png");
 
@@ -202,6 +204,8 @@ public class StudyDisplay {
 
         gridPane2.add(startTimerButton, 2, 0);
         gridPane2.add(timerField, 2, 1);
+        gridPane2.add(setDailyReminderButton, 1, 0);
+        gridPane2.add(dateField, 1, 1);
 //        controller.startTimer(startTimerButton, timerField);
 
         setConstraints(gridPane1);

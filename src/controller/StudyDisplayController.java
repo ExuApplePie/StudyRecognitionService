@@ -44,15 +44,16 @@ public class StudyDisplayController {
     }
 
     public void initControls(Stage primaryStage) {
-        showDefinition();
-        showValue();
-        checkAnswerOnPress();
-        importData();
-        saveData();
-        startTimer();
-        changeToScene1(primaryStage);
-        changeToScene2(primaryStage);
-        toggleFullScreen(primaryStage);
+        this.showDefinition();
+        this.showValue();
+        this.checkAnswerOnPress();
+        this.importData();
+        this.saveData();
+        this.startTimer();
+        this.setDailyReminders();
+        this.changeToScene1(primaryStage);
+        this.changeToScene2(primaryStage);
+        this.toggleFullScreen(primaryStage);
     }
 
     public void showDefinition() {
@@ -61,7 +62,6 @@ public class StudyDisplayController {
                     this.mainDisplay.questionLabel.setText(this.studySet.displayDefinition());
                     this.mainDisplay.ansField.requestFocus();
                     this.mainDisplay.hideImages();
-                    System.out.println(this.data.formatData());
                 });
     }
 
@@ -127,6 +127,14 @@ public class StudyDisplayController {
             }
         });
     }
+    
+    public void setDailyReminders() {
+        this.mainDisplay.setDailyReminderButton.setOnAction((ActionEvent event) -> {
+            TimerRunner tr = new TimerRunner();
+            tr.scheduleDailyReminders(this.mainDisplay.dateField.getText());
+            this.mainDisplay.dateField.setText("Sucess!");
+        });
+    } 
 
     public void changeToScene1(Stage primaryStage) {
         this.mainDisplay.scene1Button.setOnAction(e -> primaryStage.setScene(this.mainDisplay.scene1));

@@ -5,6 +5,12 @@
  */
 package controller;
 
+import java.awt.AWTException;
+import java.awt.Image;
+import java.awt.SystemTray;
+import java.awt.Toolkit;
+import java.awt.TrayIcon;
+
 
 
 /**
@@ -18,8 +24,16 @@ public class Reminders {
     }
     
 
-    public void displayNotification() {
-
+    public static void displayNotification(String title, String content) throws AWTException {
+        SystemTray tray = SystemTray.getSystemTray();
+        Image image = Toolkit.getDefaultToolkit().createImage("/images/icon.png");
+        
+        TrayIcon trayIcon = new TrayIcon(image, "Reminder");
+        trayIcon.setImageAutoSize(true);
+        trayIcon.setToolTip("Reminder Icon");
+        tray.add(trayIcon);
+        
+        trayIcon.displayMessage(title, content, TrayIcon.MessageType.INFO);
     }
 
     public void setReminder(String content, int date) {
