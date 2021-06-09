@@ -174,6 +174,7 @@ public class StudyDisplay {
     public Scene scene2 = new Scene(gridPane2, 800, 800);
     public Button scene1Button = button("Studying");
     public Button scene2Button = button("Settings");
+    public Button doOCRButton = button ("Do OCR");
     public ListView termList = new ListView();
     public Button toggleFullScreenButton = button("Toggle Full Screen");
 
@@ -217,6 +218,7 @@ public class StudyDisplay {
         gridPane2.add(valueField, 1, 4);
         gridPane2.add(addTermButton, 2, 3);
         gridPane2.add(removeTermButton, 2, 4);
+        gridPane2.add(doOCRButton, 3, 0);
 //        controller.startTimer(startTimerButton, timerField);
 
         setConstraints(gridPane1);

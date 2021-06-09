@@ -58,6 +58,7 @@ public class StudyDisplayController {
         this.toggleFullScreen(primaryStage);
         this.addTerm();
         this.removeTerm();
+        this.doOCR();
     }
 
     public void showDefinition() {
@@ -196,6 +197,14 @@ public class StudyDisplayController {
         });
     }
 
+    public void doOCR() {
+        this.mainDisplay.doOCRButton.setOnAction((ActionEvent event) -> {
+            File file = StudyDisplayController.showOpenDialog();
+            System.out.println(models.imageOCR.scanImage(file));
+        });
+
+    }
+
     public static void showTimerEndWindow() {
         Platform.runLater(() -> {
             Stage popupWindow = new Stage();
@@ -226,7 +235,8 @@ public class StudyDisplayController {
 
     public static File showOpenDialog() {
         FileChooser fc = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("txt files (*.txt)", "*.txt");
+//FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("jpg", "*.jpg");
         fc.getExtensionFilters().add(extFilter);
         File file = fc.showOpenDialog(null);
         return file;
