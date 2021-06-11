@@ -72,17 +72,20 @@ public class TimerRunner {
             }
         }, today.getTime(), TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS));
     }
-    
-    public void scheduleReminders(String content, Date date) {
+
+    public void scheduleReminders(String title, String content, Date date) {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Reminders.setReminder(content, date);
+                try {
+                    Reminders.displayNotification(title, content);
+                } catch (AWTException ex) {
+                    System.err.println(ex);
+                }
             }
         }, date);
     }
-    
 
     public static double calculateTime(int startTime) {
         return 0.0;

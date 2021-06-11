@@ -37,7 +37,4 @@ public class Reminders {
         trayIcon.displayMessage(title, content, TrayIcon.MessageType.INFO);
     }
 
-    public static void setReminder(String content, Date date) {
-        
-    }
 }

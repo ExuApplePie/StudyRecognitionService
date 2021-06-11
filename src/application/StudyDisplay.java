@@ -10,6 +10,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TabPane;
@@ -176,6 +177,7 @@ public class StudyDisplay {
     public Button scene2Button = button("Settings");
     public Button doOCRButton = button ("Do OCR");
     public ListView termList = new ListView();
+    public DatePicker datePicker = new DatePicker();
     public Button toggleFullScreenButton = button("Toggle Full Screen");
 
     public void addControls() {
@@ -219,6 +221,7 @@ public class StudyDisplay {
         gridPane2.add(addTermButton, 2, 3);
         gridPane2.add(removeTermButton, 2, 4);
         gridPane2.add(doOCRButton, 3, 0);
+        gridPane2.add(datePicker, 3, 1);
 //        controller.startTimer(startTimerButton, timerField);
 
         setConstraints(gridPane1);
