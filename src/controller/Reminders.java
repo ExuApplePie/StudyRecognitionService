@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
+import java.util.Date;
 
 
 
@@ -36,7 +37,7 @@ public class Reminders {
         trayIcon.displayMessage(title, content, TrayIcon.MessageType.INFO);
     }
 
-    public void setReminder(String content, int date) {
-
+    public static void setReminder(String content, Date date) {
+        
     }
 }

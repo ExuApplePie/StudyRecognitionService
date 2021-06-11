@@ -8,6 +8,7 @@ package controller;
 import application.StudyRecognitionService;
 import java.awt.AWTException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -70,6 +71,16 @@ public class TimerRunner {
                 }
             }
         }, today.getTime(), TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS));
+    }
+    
+    public void scheduleReminders(String content, Date date) {
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Reminders.setReminder(content, date);
+            }
+        }, date);
     }
     
 

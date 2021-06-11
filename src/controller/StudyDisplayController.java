@@ -22,6 +22,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -235,9 +236,12 @@ public class StudyDisplayController {
 
     public static File showOpenDialog() {
         FileChooser fc = new FileChooser();
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("txt files (*.txt)", "*.txt");
+//        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("txt files (*.txt)", "*.txt");
 //FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("jpg", "*.jpg");
-        fc.getExtensionFilters().add(extFilter);
+        fc.getExtensionFilters().addAll(
+                new ExtensionFilter("Text Files", "*.txt"),
+                new ExtensionFilter("Image Files", "*.png", "*.jpg", "*.tiff"),
+                new ExtensionFilter("All Files", "*.*"));
         File file = fc.showOpenDialog(null);
         return file;
     }
