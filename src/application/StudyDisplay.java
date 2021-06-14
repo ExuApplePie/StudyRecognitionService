@@ -1,19 +1,22 @@
 package application;
 
-import controller.StudyDisplayController;
+import controller.TimerRunner;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import models.StudyFiles;
-import javafx.application.Application;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.util.Date;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -22,10 +25,11 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import models.SRS;
-import models.TermData;
+import javafx.util.converter.LocalDateTimeStringConverter;
+import tornadofx.control.DateTimePicker;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -37,7 +41,7 @@ import models.TermData;
  * @author 84038001
  */
 public class StudyDisplay {
-
+    
     public void updateDisplay() {
     }
 
@@ -58,10 +62,10 @@ public class StudyDisplay {
 //        label.setMinHeight(400);
         label.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         label.setText(text);
-
+        
         return label;
     }
-
+    
     private TextArea textArea() {
         TextArea textArea = new TextArea();
 //        textArea.setLayoutX(0);
@@ -80,7 +84,7 @@ public class StudyDisplay {
 //        });
         return textArea;
     }
-
+    
     private TextField textField(String text) {
         TextField textField = new TextField();
 //        textField.setLayoutX(0);
@@ -88,7 +92,8 @@ public class StudyDisplay {
 //        textField.setMinWidth(450);
 //        textField.setMinHeight(25);
         textField.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        textField.setText(text);
+//        textField.setText(text);
+        textField.setPromptText(text);
 //        textField.setOnKeyPressed(new EventHandler<KeyEvent>(){
 //            @Override
 //            public void handle(KeyEvent e) {
@@ -97,7 +102,7 @@ public class StudyDisplay {
 //        });
         return textField;
     }
-
+    
     private Button button(String title) {
         Button button = new Button(title);
         button.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -105,7 +110,7 @@ public class StudyDisplay {
 //        button.setPrefSize(200, 200);
         return button;
     }
-
+    
     private ImageView imageView(String pathToImage) {
         FileInputStream input = null;
         try {
@@ -122,22 +127,24 @@ public class StudyDisplay {
         imageView.setCache(true);
         return imageView;
     }
-
+    
     private void setConstraints(GridPane gp) {
         gp.getColumnConstraints().clear();
         gp.getRowConstraints().clear();
         for (int j = 0; j < gp.getColumnCount(); j++) {
             ColumnConstraints cc = new ColumnConstraints();
             cc.setHalignment(HPos.CENTER);
-            cc.setFillWidth(true);
-            cc.setHgrow(Priority.ALWAYS);
+            cc.setPercentWidth(50);
+//            cc.setFillWidth(true);
+//            cc.setHgrow(Priority.SOMETIMES);
             gp.getColumnConstraints().add(cc);
         }
         for (int j = 0; j < gp.getRowCount(); j++) {
             RowConstraints rc = new RowConstraints();
             rc.setValignment(VPos.CENTER);
-            rc.setFillHeight(true);
-            rc.setVgrow(Priority.ALWAYS);
+//            rc.setFillHeight(true);
+//            rc.setVgrow(Priority.ALWAYS);
+            rc.setPercentHeight(50);
             gp.getRowConstraints().add(rc);
         }
     }
@@ -159,27 +166,27 @@ public class StudyDisplay {
     public Button setDailyReminderButton = button("Set daily reminder time");
     public Button addTermButton = button("Press to add entered term");
     public Button removeTermButton = button("Press to remove selected term");
+    public Button createReminderButton = button("Create a reminder");
     public Label questionLabel = label("Questions Appear Here");
     public TextField ansField = textField("Type your answers here");
     public TextField scoreField = textField("Your score for the term shows up here");
     public TextField timerField = textField("type how long the timer should be");
-    public TextField dateField = textField("Enter the time in (HH:MM) of when you want daily reminders to study");
+    public TextField dateField = textField("Enter 24H time (HH:MM)");
     public TextField valueField = textField("Enter Definition");//comment below
     public TextField definitionField = textField("Enter Term"); //again confusing naming but refer to above comment
     public ImageView checkMarkImage = imageView(System.getProperty("user.dir") + "/images/check_mark.jpg");
     public ImageView redXImage = imageView(System.getProperty("user.dir") + "/images/red_x.png");
-
+    
     public GridPane gridPane1 = new GridPane();
     public GridPane gridPane2 = new GridPane();
     public Scene scene1 = new Scene(gridPane1, 800, 800);
     public Scene scene2 = new Scene(gridPane2, 800, 800);
     public Button scene1Button = button("Studying");
     public Button scene2Button = button("Settings");
-    public Button doOCRButton = button ("Do OCR");
+    public Button doOCRButton = button("Do OCR");
     public ListView termList = new ListView();
-    public DatePicker datePicker = new DatePicker();
     public Button toggleFullScreenButton = button("Toggle Full Screen");
-
+    
     public void addControls() {
 //        gridPane.getRowConstraints().add(new RowConstraints(100));
 //        setAction();
@@ -188,7 +195,7 @@ public class StudyDisplay {
 
         gridPane1.add(scene2Button, 3, 0);
         gridPane2.add(scene1Button, 3, 0);
-
+        
         gridPane1.add(valueButton, 0, 0);
 //        controller.showValue(valueButton, questionLabel, ansField, studySet);
 
@@ -204,7 +211,7 @@ public class StudyDisplay {
 //        checkMarkImage.fitWidthProperty().bind(gridPane1.widthProperty());
 //        checkMarkImage.fitHeightProperty().bind(gridPane1.heightProperty());
         gridPane1.add(redXImage, 2, 1);
-
+        
         gridPane2.add(importDataButton, 0, 0);
 //        controller.importData(importDataButton);
 
@@ -220,26 +227,71 @@ public class StudyDisplay {
         gridPane2.add(valueField, 1, 4);
         gridPane2.add(addTermButton, 2, 3);
         gridPane2.add(removeTermButton, 2, 4);
-        gridPane2.add(doOCRButton, 3, 0);
-        gridPane2.add(datePicker, 3, 1);
+        gridPane2.add(doOCRButton, 3, 4);
+        gridPane2.add(createReminderButton, 3, 1);
 //        controller.startTimer(startTimerButton, timerField);
 
         setConstraints(gridPane1);
         setConstraints(gridPane2);
     }
-
+    
     public void clearText() {
         questionLabel.setText("");
         ansField.setText("");
     }
-
+    
     public void hideImages() {
         checkMarkImage.setVisible(false);
         redXImage.setVisible(false);
     }
     
-
-
+    public static void showTimerEndWindow() {
+        Platform.runLater(() -> {
+            Stage popupWindow = new Stage();
+            popupWindow.initModality(Modality.APPLICATION_MODAL);
+            popupWindow.setTitle("The timer has ended");
+            Label label1 = new Label("Timer End!");
+            Button button1 = new Button("close this window");
+            button1.setOnAction(e -> {
+                popupWindow.close();
+            });
+            
+            VBox layout = new VBox(10);
+            layout.getChildren().addAll(label1, button1);
+            layout.setAlignment(Pos.CENTER);
+            Scene scene1 = new Scene(layout, 300, 250);
+            popupWindow.setScene(scene1);
+            popupWindow.showAndWait();
+        });
+    }
+    
+    public void showCreateReminderWindow() {
+        Platform.runLater(() -> {
+            Stage popupWindow = new Stage();
+            popupWindow.initModality(Modality.APPLICATION_MODAL);
+            popupWindow.setTitle("Create a New Reminder");
+            TextField titleField = new TextField();
+            titleField.setPromptText("Enter the title of the reminder");
+            TextField contentField = new TextField();
+            contentField.setPromptText("Enter what you want the reminder to display");
+            DateTimePicker dateTimePicker = new DateTimePicker();
+            Button createReminderButton = new Button("Create Reminder and Exit");
+            createReminderButton.setOnAction(e -> {
+                Instant instant = dateTimePicker.getDateTimeValue().toInstant(ZoneOffset.UTC); //right now sets as current time, maybe use jfxtras?
+//                System.out.println(instant);
+//System.out.println(dateTimePicker.getDateTimeValue());
+                TimerRunner.scheduleReminders(titleField.getText(), contentField.getText(), Date.from(instant));
+                popupWindow.close();
+            });
+            
+            VBox layout = new VBox(10);
+            layout.getChildren().addAll(titleField, contentField, dateTimePicker, createReminderButton);
+            layout.setAlignment(Pos.CENTER);
+            Scene scene1 = new Scene(layout, 300, 250);
+            popupWindow.setScene(scene1);
+            popupWindow.showAndWait();
+        });
+    }
 
     /*
     private void startForm() {

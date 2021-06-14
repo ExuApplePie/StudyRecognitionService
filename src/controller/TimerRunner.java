@@ -5,20 +5,15 @@
  */
 package controller;
 
-import application.StudyRecognitionService;
+import application.StudyDisplay;
 import java.awt.AWTException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.application.Platform;
-import javafx.scene.control.Label;
-import javafx.stage.Popup;
-import javafx.stage.Window;
 
 /**
  *
@@ -34,7 +29,7 @@ public class TimerRunner {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                StudyDisplayController.showTimerEndWindow();
+                StudyDisplay.showTimerEndWindow();
                 playNoise("alarm.wav");
                 this.cancel();
             }
@@ -50,7 +45,7 @@ public class TimerRunner {
 
     }
 
-    public void scheduleDailyReminders(String time) {
+    public void scheduleDailyReminders(String time) throws NoSuchElementException {
         Scanner sc = new Scanner(time);
         sc.useDelimiter(":");
         int hour = Integer.parseInt(sc.next());
@@ -73,7 +68,7 @@ public class TimerRunner {
         }, today.getTime(), TimeUnit.MILLISECONDS.convert(1, TimeUnit.DAYS));
     }
 
-    public void scheduleReminders(String title, String content, Date date) {
+    public static void scheduleReminders(String title, String content, Date date) {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -85,6 +80,7 @@ public class TimerRunner {
                 }
             }
         }, date);
+        System.out.println(date);
     }
 
     public static double calculateTime(int startTime) {

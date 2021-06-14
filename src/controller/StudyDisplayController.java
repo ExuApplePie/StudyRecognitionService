@@ -8,6 +8,7 @@ package controller;
 import application.StudyDisplay;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -60,6 +61,7 @@ public class StudyDisplayController {
         this.addTerm();
         this.removeTerm();
         this.doOCR();
+        this.setReminder();
     }
 
     public void showDefinition() {
@@ -147,8 +149,18 @@ public class StudyDisplayController {
     public void setDailyReminders() {
         this.mainDisplay.setDailyReminderButton.setOnAction((ActionEvent event) -> {
             TimerRunner tr = new TimerRunner();
-            tr.scheduleDailyReminders(this.mainDisplay.dateField.getText());
-            this.mainDisplay.dateField.setText("Sucess!");
+            try {
+                tr.scheduleDailyReminders(this.mainDisplay.dateField.getText());
+                this.mainDisplay.dateField.setText("Sucess!");
+            } catch (NoSuchElementException e) {
+                this.mainDisplay.dateField.setText("Enter 24H time in (HH:MM)");
+            }
+        });
+    }
+
+    public void setReminder() {
+        this.mainDisplay.createReminderButton.setOnAction((ActionEvent event) -> {
+            this.mainDisplay.showCreateReminderWindow();
         });
     }
 
@@ -204,26 +216,6 @@ public class StudyDisplayController {
             System.out.println(models.imageOCR.scanImage(file));
         });
 
-    }
-
-    public static void showTimerEndWindow() {
-        Platform.runLater(() -> {
-            Stage popupWindow = new Stage();
-            popupWindow.initModality(Modality.APPLICATION_MODAL);
-            popupWindow.setTitle("The timer has ended");
-            Label label1 = new Label("Timer End!");
-            Button button1 = new Button("close this window");
-            button1.setOnAction(e -> {
-                popupWindow.close();
-            });
-
-            VBox layout = new VBox(10);
-            layout.getChildren().addAll(label1, button1);
-            layout.setAlignment(Pos.CENTER);
-            Scene scene1 = new Scene(layout, 300, 250);
-            popupWindow.setScene(scene1);
-            popupWindow.showAndWait();
-        });
     }
 
     public static File showSaveDialog() {
