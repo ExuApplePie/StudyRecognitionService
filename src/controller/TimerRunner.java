@@ -82,7 +82,7 @@ public class TimerRunner {
         }, date);
     }
 
-    public static double calculateTime(int startTime) {
-        return 0.0;
-    }
+//    public static double calculateTime(int startTime) {
+//        return 0.0;
+//    }
 }

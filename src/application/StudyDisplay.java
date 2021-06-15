@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.util.Date;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -29,13 +28,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.converter.LocalDateTimeStringConverter;
-import tornadofx.control.DateTimePicker;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -304,6 +300,7 @@ public class StudyDisplay {
                     OffsetDateTime odt = OffsetDateTime.now(ZoneId.systemDefault());
                     Instant instant = ldt.toInstant(odt.getOffset());
                     Date date = Date.from(instant);
+                    //add to Reminders.allReminders
                     TimerRunner.scheduleReminders(titleField.getText(), contentField.getText(), date);
                     popupWindow.close();
                     } catch (Exception e) {

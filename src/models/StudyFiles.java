@@ -66,6 +66,10 @@ public class StudyFiles {
         StudyFiles.saveFile(System.getProperty("user.dir") + "/UserData.txt", content);
     }
 
+    public static void saveUserReminders(String content) {
+        StudyFiles.saveFile(System.getProperty("user.dir") + "/UserReminders.txt", content); //save daily reminder time and any that have not run
+    }
+
     public static void loadUserData(TermData data) {
         try {
             data.loadData(new File(System.getProperty("user.dir") + "/UserData.txt"));

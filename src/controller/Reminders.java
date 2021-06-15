@@ -16,6 +16,8 @@ import java.awt.TrayIcon;
  * @author niclo
  */
 public class Reminders {
+    
+    public static String allReminders = "";
 
     private Reminders() {
 

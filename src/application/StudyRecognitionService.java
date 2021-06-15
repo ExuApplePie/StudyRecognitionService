@@ -37,7 +37,7 @@ public class StudyRecognitionService extends Application {
 
         primaryStage.setOnCloseRequest(
                 (WindowEvent t) -> {
-                    StudyFiles.saveUserData(data.formatData()); //save user data on close
+                    StudyFiles.saveUserData(data.formatData()); //save user data on close TODO add the reminders
                     Platform.exit();
                     System.exit(0);
                 }
