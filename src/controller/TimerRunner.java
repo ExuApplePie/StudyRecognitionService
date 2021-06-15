@@ -80,7 +80,6 @@ public class TimerRunner {
                 }
             }
         }, date);
-        System.out.println(date);
     }
 
     public static double calculateTime(int startTime) {

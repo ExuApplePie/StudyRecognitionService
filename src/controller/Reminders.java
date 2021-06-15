@@ -11,28 +11,25 @@ import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
 
-
-
 /**
  *
  * @author niclo
  */
 public class Reminders {
 
-    public Reminders() {
-       
+    private Reminders() {
+
     }
-    
 
     public static void displayNotification(String title, String content) throws AWTException {
         SystemTray tray = SystemTray.getSystemTray();
         Image image = Toolkit.getDefaultToolkit().createImage("/images/icon.png");
-        
+
         TrayIcon trayIcon = new TrayIcon(image, "Reminder");
         trayIcon.setImageAutoSize(true);
         trayIcon.setToolTip("Reminder Icon");
         tray.add(trayIcon);
-        
+
         trayIcon.displayMessage(title, content, TrayIcon.MessageType.INFO);
     }
 

@@ -60,7 +60,7 @@ public class StudyDisplayController {
         this.toggleFullScreen(primaryStage);
         this.addTerm();
         this.removeTerm();
-        this.doOCR();
+//        this.doOCR();
         this.setReminder();
     }
 
@@ -210,6 +210,7 @@ public class StudyDisplayController {
         });
     }
 
+    /*
     public void doOCR() {
         this.mainDisplay.doOCRButton.setOnAction((ActionEvent event) -> {
             File file = StudyDisplayController.showOpenDialog();
@@ -217,6 +218,7 @@ public class StudyDisplayController {
         });
 
     }
+*/
 
     public static File showSaveDialog() {
         FileChooser fc = new FileChooser();
