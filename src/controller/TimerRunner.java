@@ -5,6 +5,7 @@
  */
 package controller;
 
+import application.PopupWindows;
 import application.StudyDisplay;
 import java.awt.AWTException;
 import java.util.Calendar;
@@ -29,7 +30,7 @@ public class TimerRunner {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                StudyDisplay.showTimerEndWindow();
+                PopupWindows.showTimerEndWindow();
                 playNoise("alarm.wav");
                 this.cancel();
             }

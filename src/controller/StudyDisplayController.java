@@ -5,6 +5,7 @@
  */
 package controller;
 
+import application.PopupWindows;
 import application.StudyDisplay;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,6 +14,7 @@ import java.util.Scanner;
 import javafx.event.ActionEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -151,7 +153,7 @@ public class StudyDisplayController {
 
     public void setReminder() {
         this.mainDisplay.createReminderButton.setOnAction((ActionEvent event) -> {
-            StudyDisplay.showCreateReminderWindow();
+            PopupWindows.showCreateReminderWindow();
         });
     }
 

@@ -28,8 +28,8 @@ public class MusicPlayer {
 
     public MusicPlayer() {
         jsaIO = new JavaSoundAudioIO();
-//        JavaSoundAudioIO.printMixerInfo();
-        jsaIO.selectMixer(2); //this is system specific
+        JavaSoundAudioIO.printMixerInfo();
+        jsaIO.selectMixer(2); //this is system specific, perhaps 0 or 1 is deafult audio sound device?
 //        jsaIO.chooseMixerCommandLine(); //use this if I ran from the command line?
         ac = new AudioContext(jsaIO);
     }
@@ -48,7 +48,6 @@ public class MusicPlayer {
         g.addInput(sp);
         ac.out.addInput(g);
         ac.start();
-
     }
 
     public void pauseMusic() {
