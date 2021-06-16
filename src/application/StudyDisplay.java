@@ -269,7 +269,7 @@ public class StudyDisplay {
         });
     }
 
-    public void showCreateReminderWindow() {
+    public static void showCreateReminderWindow() {
         Platform.runLater(() -> {
             Stage popupWindow = new Stage();
             popupWindow.initModality(Modality.APPLICATION_MODAL);

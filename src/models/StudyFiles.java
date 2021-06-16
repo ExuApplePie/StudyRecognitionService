@@ -7,7 +7,6 @@ package models;
  */
 import java.util.logging.Logger;
 import java.util.logging.Level;
-import application.StudyDisplay;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;

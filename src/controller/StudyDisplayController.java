@@ -10,23 +10,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextInputControl;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import models.TermData;
 import models.SRS;
 import models.Term;
@@ -91,9 +80,11 @@ public class StudyDisplayController {
                     if (b) {
                         this.mainDisplay.scoreField.setText("correct (+1) Score: " + this.studySet.getScore(this.mainDisplay.questionLabel.getText()));
                         this.mainDisplay.checkMarkImage.setVisible(b);
+                        this.mainDisplay.redXImage.setVisible(!b);
                     } else {
                         this.mainDisplay.scoreField.setText("incorrect (-1) Score: " + this.studySet.getScore(this.mainDisplay.questionLabel.getText()));
                         this.mainDisplay.redXImage.setVisible(!b);
+                        this.mainDisplay.checkMarkImage.setVisible(b);
                     }
                 } catch (IllegalArgumentException e) {
 //                    System.out.println("pressed enter with nothing"); 
@@ -160,7 +151,7 @@ public class StudyDisplayController {
 
     public void setReminder() {
         this.mainDisplay.createReminderButton.setOnAction((ActionEvent event) -> {
-            this.mainDisplay.showCreateReminderWindow();
+            StudyDisplay.showCreateReminderWindow();
         });
     }
 
@@ -218,8 +209,7 @@ public class StudyDisplayController {
         });
 
     }
-*/
-
+     */
     public static File showSaveDialog() {
         FileChooser fc = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");

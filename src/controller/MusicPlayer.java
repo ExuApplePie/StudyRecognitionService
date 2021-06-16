@@ -28,8 +28,9 @@ public class MusicPlayer {
 
     public MusicPlayer() {
         jsaIO = new JavaSoundAudioIO();
-//JavaSoundAudioIO.printMixerInfo();
-        jsaIO.selectMixer(2);
+//        JavaSoundAudioIO.printMixerInfo();
+        jsaIO.selectMixer(2); //this is system specific
+//        jsaIO.chooseMixerCommandLine(); //use this if I ran from the command line?
         ac = new AudioContext(jsaIO);
     }
 
